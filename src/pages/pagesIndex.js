@@ -1,1 +1,1 @@
-export {default as GamePage} from "./game/GamePage"
+export {default as Home} from "./home/Home"

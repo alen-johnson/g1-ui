@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import "./GameRun.css";
 import { items } from "../../assets/contents/contens";
 
 function GameRun() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [player_set, setPlayer_set] = useState(null);
+  const [isVisible, setIsVisible] = useState(true);
 
   //function returns a list of players
   const createPlayers = () => {
@@ -65,6 +67,7 @@ function GameRun() {
 
   // Function to display the next key-value pair
   const handleNextClick = () => {
+    setIsVisible(true);
     if (currentIndex === entries.length - 1) {
       // If last player has been displayed, reset and create new player set
       const newPlayerSet = makeImposter([...item_list], players);
@@ -74,15 +77,32 @@ function GameRun() {
       setCurrentIndex((prevIndex) => prevIndex + 1);
     }
   };
+  const handleClearClick = () => {
+    setIsVisible(false);
+  };
 
   return (
-    <div className="gamePage">
-      <div id="display-area">
-        <p>{`${entries[currentIndex][0]}: ${entries[currentIndex][1]}`}</p>
+    <div className="game-run">
+      <div className="game-run__display-area">
+        {isVisible && (
+          <div>
+            <p>{`${entries[currentIndex][0]} :`}</p>
+            <p> {`  ${entries[currentIndex][1]}`}</p>
+          </div>
+        )}
       </div>
-      <button id="next-button" onClick={handleNextClick}>
-        Next
-      </button>
+      <div className="game-run__btns">
+        <button className="game-run__button " onClick={handleNextClick}>
+          Next
+        </button>
+
+        <button
+          className="game-run__button game-run__button--clear"
+          onClick={handleClearClick}
+        >
+          Clear
+        </button>
+      </div>
     </div>
   );
 }
