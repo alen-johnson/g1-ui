@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./GameRun.css";
 import { items } from "../../assets/contents/contens";
+import { useNavigate } from "react-router-dom";
 
 function GameRun() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [player_set, setPlayer_set] = useState(null);
   const [isVisible, setIsVisible] = useState(true);
+  const navigate = useNavigate()
 
   //function returns a list of players
   const createPlayers = () => {
@@ -80,10 +82,13 @@ function GameRun() {
   const handleClearClick = () => {
     setIsVisible(false);
   };
-
+  const handleXClick = () => {
+    navigate('/')
+  }
   return (
     <div className="game-run">
       <div className="game-run__display-area">
+        <button onClick={handleXClick}>X</button>
         {isVisible && (
           <div>
             <p>{`${entries[currentIndex][0]} :`}</p>

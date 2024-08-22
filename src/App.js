@@ -1,5 +1,5 @@
 import './App.css';
-import { Home } from './pages/pagesIndex';
+import { GameMode, Home } from './pages/pagesIndex';
 import {BrowserRouter, Route, Routes} from "react-router-dom"
 import {GameRun} from './components/componentsIndex'
 
@@ -10,7 +10,7 @@ function App() {
  <Routes>
      <Route path='/'  element={<Home/>} />
      <Route path='/gamerun'  element={<GameRun/>} />
-
+    <Route path='/gamemode' element={<GameMode/>} />
       </Routes>
       </BrowserRouter>
     </div>
