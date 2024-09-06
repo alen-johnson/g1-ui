@@ -10,10 +10,13 @@ const navigate = useNavigate()
   };
 
   return (
-    <div>
+    <div >
       {isOpen && (
-        <div className="modal-overlay" onClick={closeModal}>
+        <div className="modal-overlay">
           <div className="modal" onClick={(e) => e.stopPropagation()}>
+          <button className="close-button" onClick={closeModal}>
+                    &times;
+                  </button>
            <p>Select Number of players</p>
             
             <p>Select Category</p>

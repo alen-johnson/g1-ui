@@ -1,5 +1,3 @@
-
-import { useNavigate } from "react-router-dom"
 import { Modal } from "../../components/componentsIndex"
 import "./GameMode.css"
 
