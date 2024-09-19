@@ -5,10 +5,10 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: linear-gradient(135deg, rgba(181, 227, 227, 0.8), rgba(25, 104, 136, 0.8));
+    background: linear-gradient(135deg, rgba(255, 204, 128, 0.9), rgba(255, 94, 77, 0.8));
     background-size: cover;
     background-position: center;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Merriweather', serif;
 }
 
 .game-mode__display-area {
@@ -27,10 +27,9 @@
     transition: all 0.3s ease;
 }
 
-
 .game-mode__display-area p {
     cursor: pointer;
-    color: #ff0000;
+    color: #4E342E;
     font-size: 1.8rem;
     font-weight: bold;
     text-transform: uppercase;
@@ -40,8 +39,8 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.game-mode__display-area p:hover {
-    transform: scale(1.15);
-    color: #b21616;
+/* .game-mode__display-area p:hover {
+    transform: scale(1.1);
+    color: #FFC107; 
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-}
+} */

@@ -1,27 +1,72 @@
 import { useNavigate } from "react-router-dom";
-import "./Modal.css"
+import "./Modal.css";
 import React, { useState } from "react";
+import { Button, Select, Space, Spin } from "antd";
+import Icon from "@ant-design/icons/lib/components/Icon";
+import { CloseCircleOutlined } from "@ant-design/icons";
 
 const Modal = ({ isOpen, closeModal }) => {
-const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const handleplay = () => {
-    navigate("/gamerun")
-    closeModal();
+    setLoading(true);
+    setTimeout(() => {
+      navigate("/gamerun");
+      closeModal();
+    }, 2000);
   };
-
+  const categories = [
+    "Athletes",
+    "World Leaders",
+    "Living Things",
+    "Household",
+    "Historical Figures",
+    "Countries",
+    "Celebrities",
+    "Movies & Fiction",
+  ];
   return (
-    <div >
+    <div>
       {isOpen && (
         <div className="modal-overlay">
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-          <button className="close-button" onClick={closeModal}>
-                    &times;
-                  </button>
-           <p>Select Number of players</p>
+            <div className="modal-close_btn">
+            <CloseCircleOutlined  
+
             
+            onClick={closeModal} />
+    </div>
+            <Space>
+              <p>Select Number of players</p>
+              <Select allowClear style={{ width: "100%" }}>
+                <Select.Option value="4">4</Select.Option>
+                <Select.Option value="5">5</Select.Option>
+                <Select.Option value="6">6</Select.Option>
+              </Select>
+            </Space>
+
+            {/* <Space> */}
             <p>Select Category</p>
+            <Select
+              mode="multiple"
+              maxTagCount={3}
+              allowClear
+              placeholder="Category"
+              style={{ width: "100%" }}
+            >
+              {categories.map((category, key) => {
+                return (
+                  <Select.Option key={key} value={category}>
+                    {category}
+                  </Select.Option>
+                );
+              })}
+            </Select>
+            {/* </Space> */}
             <p>random</p>
-           <button onClick={handleplay}>Start</button>
+            <Spin spinning={loading}>
+              <Button onClick={handleplay}>Start</Button>
+            </Spin>
           </div>
         </div>
       )}
