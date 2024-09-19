@@ -1,70 +1,82 @@
-.game-run{
+.game-run {
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: rgb(199, 237, 237);
+        background-color: #FFF7E0; /* Light Cream */
 }
-.game-run__display-area{
+
+.game-run__display-area {
+    display: flex;
+    flex-direction: column;
     flex: 1;
     width: 100%;
     max-width: 1200px;
     margin: auto;
     box-sizing: border-box;
     padding: 20px;
-    /* background-color: rgb(172, 245, 245); */
-    /* border: 2px solid black;
-    border-radius: 16px;
-    box-shadow: 10px 4px 10px rgba(0, 0, 0, 1); */
     display: flex;
     align-items: center;
     justify-content: center;
+
+    border-radius: 15px;
 }
-.game-run__display-area div {
+
+.game-run__box div {
     display: flex;
     box-sizing: border-box;
     padding: 20px;
-    /* background-color: rgb(172, 245, 245); */
-    /* border: 2px solid black;
-    border-radius: 16px;
-    box-shadow: 10px 4px 10px rgba(0, 0, 0, 1); */
+    align-items: center;
+    justify-content: center;
 }
 
-.game-run__display-area p{
+.game-run__box p {
+    justify-content: center;
+    align-items: center;
     text-align: center;
     font-size: 1.5rem;
-    color: rgb(0, 0, 0);
+    color: #6D4C41; /* Warm brown */
 }
 
-.game-run__btns{
-    
+.game-run__box {
+    border: 2px solid #FFE082; /* Soft Yellow */
+    display: flex;
+    width: 20rem;
+    height: 10rem;
+    margin: 5rem;
+    align-content: flex-end;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.game-run__btns {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     gap: 100px;
-
     flex: 1;
     width: 100%;
     max-width: 1200px;
-    /* border: 1px solid black;
-    border-radius: 8px; */
 }
 
-.game-run__button{
-    background-color: rgb(43, 226, 165);
-    color: white;
-    padding: 20px 42px;
+.game-run__button {
+    background-color: #FF7043; /* Bright Coral */
+    color: #FFFFFF; /* White text */
+    padding: 30px;
     font-size: 1.5rem;
     border-radius: 10px;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
-    
 }
 
-.game-run__button:hover{
-    background-color: rgb(192, 148, 234);
+.game-run__button:hover {
+    background-color: #8D6E63; /* Soft Chocolate Brown on hover */
+    color: #FFFDE7; /* Off-white text on hover */
     transform: scale(1.1);
 }

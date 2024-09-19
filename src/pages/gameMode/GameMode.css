@@ -1,17 +1,17 @@
-.home {
+.game-mode {
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: var(--background-color);
+    background: linear-gradient(135deg, rgba(255, 204, 128, 0.9), rgba(255, 94, 77, 0.8));
     background-size: cover;
     background-position: center;
     font-family: 'Merriweather', serif;
-  }
-  
-  .home__display-area {
+}
+
+.game-mode__display-area {
     width: 90%;
     max-width: 800px;
     margin: auto;
@@ -25,9 +25,9 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-  }
-  
-  .home__display-area p {
+}
+
+.game-mode__display-area p {
     cursor: pointer;
     color: #4E342E;
     font-size: 1.8rem;
@@ -37,11 +37,10 @@
     margin: 20px 0;
     transition: all 0.4s ease;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  }
-  
-  .home__display-area p:hover {
+}
+
+/* .game-mode__display-area p:hover {
     transform: scale(1.1);
-    color: var(--text-color);
+    color: #FFC107; 
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  }
-  
+} */

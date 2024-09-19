@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./GameRun.css";
 import { items } from "../../assets/contents/contens";
+import { useNavigate } from "react-router-dom";
+import { Button, Modal } from "antd";
+import { CloseCircleOutlined, StepForwardOutlined } from "@ant-design/icons";
 
 function GameRun() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [player_set, setPlayer_set] = useState(null);
   const [isVisible, setIsVisible] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [exitModal, setExitModal] = useState(false);
+  const navigate = useNavigate();
 
   //function returns a list of players
   const createPlayers = () => {
@@ -76,32 +82,60 @@ function GameRun() {
     } else {
       setCurrentIndex((prevIndex) => prevIndex + 1);
     }
+
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   };
   const handleClearClick = () => {
     setIsVisible(false);
   };
-
+  const handleXClick = () => {
+    setExitModal(true);
+  };
   return (
     <div className="game-run">
       <div className="game-run__display-area">
-        {isVisible && (
-          <div>
-            <p>{`${entries[currentIndex][0]} :`}</p>
-            <p> {`  ${entries[currentIndex][1]}`}</p>
-          </div>
-        )}
+        {/* <Button 
+        icon={<CloseCircleOutlined />}
+        onClick={handleXClick} /> */}
+          <CloseCircleOutlined
+            style={{ color: "black",fontSize:20 }}
+            onClick={handleXClick}
+          />
+
+        <Modal
+          title="Are you sure you want to exit the game?"
+          visible={exitModal}
+          onOk={() => navigate("/")}
+          onCancel={() => setExitModal(false)}
+        ></Modal>
+        <div className="game-run__box">
+          {isVisible && (
+            <div>
+              <p>{`${entries[currentIndex][0]} :`}</p>
+              <p> {`  ${entries[currentIndex][1]}`}</p>
+            </div>
+          )}
+        </div>
       </div>
       <div className="game-run__btns">
-        <button className="game-run__button " onClick={handleNextClick}>
+        <Button
+          className="game-run__button"
+          icon={<StepForwardOutlined />}
+          loading={loading}
+          onClick={handleNextClick}
+        >
           Next
-        </button>
+        </Button>
 
-        <button
+        <Button
           className="game-run__button game-run__button--clear"
           onClick={handleClearClick}
         >
           Clear
-        </button>
+        </Button>
       </div>
     </div>
   );
