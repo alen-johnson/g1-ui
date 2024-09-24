@@ -8,13 +8,17 @@ import { CloseCircleOutlined } from "@ant-design/icons";
 const Modal = ({ isOpen, closeModal }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [numberInput, setNumberInput] = useState(0)
   const handleplay = () => {
     setLoading(true);
     setTimeout(() => {
-      navigate("/gamerun");
+      navigate("/gamerun", {state:{num:numberInput}});
       closeModal();
     }, 2000);
   };
+  const handleNumberChange = (value) => {
+    setNumberInput(value)
+  }
   const categories = [
     "Athletes",
     "World Leaders",
@@ -35,10 +39,11 @@ const Modal = ({ isOpen, closeModal }) => {
 
             
             onClick={closeModal} />
-    </div>
+    </div>x
             <Space>
               <p>Select Number of players</p>
-              <Select allowClear style={{ width: "100%" }}>
+              <Select allowClear style={{ width: "100%" }}
+              onChange={handleNumberChange}>
                 <Select.Option value="4">4</Select.Option>
                 <Select.Option value="5">5</Select.Option>
                 <Select.Option value="6">6</Select.Option>

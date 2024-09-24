@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./GameRun.css";
 import { items } from "../../assets/contents/contens";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Modal } from "antd";
 import { CloseCircleOutlined, StepForwardOutlined } from "@ant-design/icons";
 
-function GameRun() {
+const GameRun =  ()  => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [player_set, setPlayer_set] = useState(null);
   const [isVisible, setIsVisible] = useState(true);
@@ -14,8 +14,12 @@ function GameRun() {
   const navigate = useNavigate();
 
   //function returns a list of players
+
+  const location = useLocation();
+  const pNum = location.state?.num || 5; 
+
   const createPlayers = () => {
-    let n = 5;
+    let n = pNum;
     let p_list = [];
     for (let i = 1; i <= n; i++) {
       p_list.push(`Player ${i}`);
@@ -73,7 +77,7 @@ function GameRun() {
 
   // Function to display the next key-value pair
   const handleNextClick = () => {
-    setIsVisible(true);
+    setIsVisible(false)
     if (currentIndex === entries.length - 1) {
       // If last player has been displayed, reset and create new player set
       const newPlayerSet = makeImposter([...item_list], players);
@@ -86,7 +90,11 @@ function GameRun() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
+    setIsVisible(true);
+
     }, 1000);
+
+
   };
   const handleClearClick = () => {
     setIsVisible(false);
@@ -94,7 +102,15 @@ function GameRun() {
   const handleXClick = () => {
     setExitModal(true);
   };
-  return (
+  const handleResetClick = () => {
+    const initialPlayerSet = makeImposter([...item_list], players);
+    setPlayer_set(initialPlayerSet);
+    setCurrentIndex(0); // Reset index to start from the first player
+
+    setIsVisible(true)
+
+  }
+    return (
     <div className="game-run">
       <div className="game-run__display-area">
         {/* <Button 
@@ -104,7 +120,7 @@ function GameRun() {
             style={{ color: "black",fontSize:20 }}
             onClick={handleXClick}
           />
-
+<Button onClick={handleResetClick} >Reset</Button>
         <Modal
           title="Are you sure you want to exit the game?"
           visible={exitModal}
