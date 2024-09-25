@@ -1,34 +1,39 @@
 import React, { useEffect, useState } from "react";
 import "./GameRun.css";
 import { items } from "../../assets/contents/contens";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Modal } from "antd";
 import { CloseCircleOutlined, StepForwardOutlined } from "@ant-design/icons";
 
-function GameRun() {
+const GameRun =  ()  => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [player_set, setPlayer_set] = useState(null);
   const [isVisible, setIsVisible] = useState(true);
   const [loading, setLoading] = useState(false);
   const [exitModal, setExitModal] = useState(false);
   const navigate = useNavigate();
-
+  
   //function returns a list of players
+
+  const location = useLocation();
+  const pNum = location.state?.num || 5; 
+
   const createPlayers = () => {
-    let n = 5;
     let p_list = [];
-    for (let i = 1; i <= n; i++) {
+    for (let i = 1; i <= pNum; i++) {
       p_list.push(`Player ${i}`);
     }
 
     return p_list;
   };
 
-  const players = createPlayers();
+  const players = location.state?.players && location.state.players.length > 0
+  ? location.state.players
+  : createPlayers();
   const item_list = items;
 
   // function return a dictionary with key as player and value as assigned names, where one player has a unique name
-  const makeImposter = (items, players) => {
+  const makeImposter = (items, pl) => {
     if (items.length < 2) {
       console.log("Start New Game");
     }
@@ -45,14 +50,14 @@ function GameRun() {
     items.splice(n, 1);
     // console.log(common_item);
 
-    n = Math.floor(Math.random() * players.length);
+    n = Math.floor(Math.random() * pl.length);
     let dict = {};
     //loop assigns item names for players
-    for (let i = 0; i < players.length; i++) {
+    for (let i = 0; i < pl.length; i++) {
       if (i === n) {
-        dict[players[i]] = imposter_item;
+        dict[pl[i]] = imposter_item;
       } else {
-        dict[players[i]] = common_item;
+        dict[pl[i]] = common_item;
       }
     }
 
@@ -73,7 +78,7 @@ function GameRun() {
 
   // Function to display the next key-value pair
   const handleNextClick = () => {
-    setIsVisible(true);
+    setIsVisible(false)
     if (currentIndex === entries.length - 1) {
       // If last player has been displayed, reset and create new player set
       const newPlayerSet = makeImposter([...item_list], players);
@@ -86,7 +91,11 @@ function GameRun() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
+    setIsVisible(true);
+
     }, 1000);
+
+
   };
   const handleClearClick = () => {
     setIsVisible(false);
@@ -94,7 +103,15 @@ function GameRun() {
   const handleXClick = () => {
     setExitModal(true);
   };
-  return (
+  const handleResetClick = () => {
+    const initialPlayerSet = makeImposter([...item_list], players);
+    setPlayer_set(initialPlayerSet);
+    setCurrentIndex(0); // Reset index to start from the first player
+
+    setIsVisible(true)
+
+  }
+    return (
     <div className="game-run">
       <div className="game-run__display-area">
         {/* <Button 
@@ -104,7 +121,7 @@ function GameRun() {
             style={{ color: "black",fontSize:20 }}
             onClick={handleXClick}
           />
-
+<Button onClick={handleResetClick} >Reset</Button>
         <Modal
           title="Are you sure you want to exit the game?"
           visible={exitModal}
@@ -117,6 +134,9 @@ function GameRun() {
               <p>{`${entries[currentIndex][0]} :`}</p>
               <p> {`  ${entries[currentIndex][1]}`}</p>
             </div>
+          )}
+          {isVisible && (
+          <p> next up : {`${entries[(currentIndex + 1) % entries.length][0]} `}</p>
           )}
         </div>
       </div>
