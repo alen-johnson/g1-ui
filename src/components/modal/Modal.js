@@ -1,24 +1,42 @@
 import { useNavigate } from "react-router-dom";
 import "./Modal.css";
 import React, { useState } from "react";
-import { Button, Select, Space, Spin } from "antd";
-import Icon from "@ant-design/icons/lib/components/Icon";
+import { Button, Input, Select, Space, Spin } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
 
 const Modal = ({ isOpen, closeModal }) => {
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [numberInput, setNumberInput] = useState(0)
+  const [numberInput, setNumberInput] = useState(0);
+  const [playerNames, setPlayerNames] = useState([]);
+
   const handleplay = () => {
     setLoading(true);
     setTimeout(() => {
-      navigate("/gamerun", {state:{num:numberInput}});
+      navigate("/gamerun", { state: { num: numberInput, players: playerNames } }); // passing no. of players to gameRun
       closeModal();
     }, 2000);
   };
+
   const handleNumberChange = (value) => {
-    setNumberInput(value)
-  }
+    setNumberInput(value);
+    // Set player names to default values when the number changes
+    setPlayerNames(Array.from({ length: value }, (_, index) => `Player ${index + 1}`));
+  };
+  
+  /* Used to update player names from user */
+  const handlePlayerNameChange = (index, event) => {
+    const updatedNames = [...playerNames];
+    const newName = event.target.value;
+  
+    // Update the player's name based on user input
+    updatedNames[index] = newName;
+  
+    setPlayerNames(updatedNames);
+  };
+  
+
   const categories = [
     "Athletes",
     "World Leaders",
@@ -29,27 +47,40 @@ const Modal = ({ isOpen, closeModal }) => {
     "Celebrities",
     "Movies & Fiction",
   ];
+
   return (
     <div>
       {isOpen && (
         <div className="modal-overlay">
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-close_btn">
-            <CloseCircleOutlined  
-
-            
-            onClick={closeModal} />
-    </div>x
+              <CloseCircleOutlined onClick={closeModal} />
+            </div>
             <Space>
               <p>Select Number of players</p>
-              <Select allowClear style={{ width: "100%" }}
-              onChange={handleNumberChange}>
+              <Select
+                allowClear
+                style={{ width: "100%" }}
+                onChange={handleNumberChange}
+              >
                 <Select.Option value="4">4</Select.Option>
                 <Select.Option value="5">5</Select.Option>
                 <Select.Option value="6">6</Select.Option>
               </Select>
             </Space>
 
+            <div>
+              {Array.from({ length: numberInput }, (_, index) => (
+                <div key={index} style={{ marginBottom: "10px" }}>
+                  <Input
+                    allowClear
+                    placeholder={`Player ${index + 1} Name`}
+                    value={playerNames[index]}
+                    onChange={(event) => handlePlayerNameChange(index, event)}
+                  />
+                </div>
+              ))}
+            </div>
             {/* <Space> */}
             <p>Select Category</p>
             <Select

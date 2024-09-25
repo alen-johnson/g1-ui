@@ -12,27 +12,28 @@ const GameRun =  ()  => {
   const [loading, setLoading] = useState(false);
   const [exitModal, setExitModal] = useState(false);
   const navigate = useNavigate();
-
+  
   //function returns a list of players
 
   const location = useLocation();
   const pNum = location.state?.num || 5; 
 
   const createPlayers = () => {
-    let n = pNum;
     let p_list = [];
-    for (let i = 1; i <= n; i++) {
+    for (let i = 1; i <= pNum; i++) {
       p_list.push(`Player ${i}`);
     }
 
     return p_list;
   };
 
-  const players = createPlayers();
+  const players = location.state?.players && location.state.players.length > 0
+  ? location.state.players
+  : createPlayers();
   const item_list = items;
 
   // function return a dictionary with key as player and value as assigned names, where one player has a unique name
-  const makeImposter = (items, players) => {
+  const makeImposter = (items, pl) => {
     if (items.length < 2) {
       console.log("Start New Game");
     }
@@ -49,14 +50,14 @@ const GameRun =  ()  => {
     items.splice(n, 1);
     // console.log(common_item);
 
-    n = Math.floor(Math.random() * players.length);
+    n = Math.floor(Math.random() * pl.length);
     let dict = {};
     //loop assigns item names for players
-    for (let i = 0; i < players.length; i++) {
+    for (let i = 0; i < pl.length; i++) {
       if (i === n) {
-        dict[players[i]] = imposter_item;
+        dict[pl[i]] = imposter_item;
       } else {
-        dict[players[i]] = common_item;
+        dict[pl[i]] = common_item;
       }
     }
 
@@ -133,6 +134,9 @@ const GameRun =  ()  => {
               <p>{`${entries[currentIndex][0]} :`}</p>
               <p> {`  ${entries[currentIndex][1]}`}</p>
             </div>
+          )}
+          {isVisible && (
+          <p> next up : {`${entries[(currentIndex + 1) % entries.length][0]} `}</p>
           )}
         </div>
       </div>
