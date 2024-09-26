@@ -1,5 +1,5 @@
 import './App.css';
-import { GameMode, Home, Settings } from './pages/pagesIndex';
+import { CreateGame, GameMode, Home, Settings } from './pages/pagesIndex';
 import {BrowserRouter, Route, Routes} from "react-router-dom"
 import {GameRun} from './components/componentsIndex'
 
@@ -12,6 +12,7 @@ function App() {
      <Route path='/gamerun'  element={<GameRun/>} />
     <Route path='/gamemode' element={<GameMode/>} />
     <Route path='/settings' element={<Settings/>} />
+    <Route path='/createGame' element={<CreateGame/>}/>
       </Routes>
       </BrowserRouter>
     </div>
