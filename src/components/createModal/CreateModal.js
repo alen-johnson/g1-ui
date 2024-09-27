@@ -1,9 +1,34 @@
-import React from 'react'
+import { CloseCircleOutlined } from "@ant-design/icons";
+import "./CreateModal.css"
+import { Button } from "antd";
+import React from "react";
 
-function CreateModal() {
+const CreateModal = ({ isOpen, closeModal }) => {
   return (
-    <div>CreateModal</div>
-  )
-}
+    <div>
+      {isOpen && (
+        <div className="modal-overlay">
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-close_btn">
+              <CloseCircleOutlined onClick={closeModal} />
+            </div>
+            <div className="modal-div">
+              <div className="modal-div_left">
+                <p>Room Code</p>
 
-export default CreateModal
+                <Button>Start</Button>
+              </div>
+              <div className="modal-div_right">
+                <p>Settings</p>
+                <p>No. of imposters</p>
+                <p>Categories</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default CreateModal;
