@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "./StartModal.css";
 import React, { useState } from "react";
 import { Button, Input, Select, Space, Spin } from "antd";
-import { CloseCircleOutlined } from "@ant-design/icons";
+import { CloseCircleOutlined, SyncOutlined } from "@ant-design/icons";
 
 const StartModal = ({ isOpen, closeModal }) => {
 
@@ -89,6 +89,7 @@ const StartModal = ({ isOpen, closeModal }) => {
               allowClear
               placeholder="Category"
               style={{ width: "100%" }}
+              disabled
             >
               {categories.map((category, key) => {
                 return (
@@ -99,7 +100,9 @@ const StartModal = ({ isOpen, closeModal }) => {
               })}
             </Select>
             {/* </Space> */}
-            <p>random</p>
+            <p>
+            <SyncOutlined spin/>
+            </p>
             <Spin spinning={loading}>
               <Button onClick={handleplay}>Start</Button>
             </Spin>
