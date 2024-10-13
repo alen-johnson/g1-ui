@@ -1,23 +1,50 @@
 import React, { useEffect, useState } from "react";
 import "./GameRun.css";
-import { items } from "../../assets/contents/contens";
+// import { items } from "../../assets/contents/contens";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Modal } from "antd";
 import { CloseCircleOutlined, StepForwardOutlined } from "@ant-design/icons";
 
-const GameRun =  ()  => {
+const GameRun = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [player_set, setPlayer_set] = useState(null);
   const [isVisible, setIsVisible] = useState(true);
   const [loading, setLoading] = useState(false);
   const [exitModal, setExitModal] = useState(false);
+  const [items, setItems] = useState([]);
   const navigate = useNavigate();
-  
-  //function returns a list of players
+
+  useEffect(() => {
+    const fetchPlayers = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/athletes"); // Your backend endpoint
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        const names = data.map((item) => item.name);
+
+        setItems(names); // Store fetched data in state
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); // Stop loading once fetch is complete
+      }
+    };
+
+    fetchPlayers();
+  }, []);
+
+  //for some reason - doesnt convert null to object without the below code
+  useEffect(() => {
+    const initialPlayerSet = makeImposter([...item_list], players);
+    setPlayer_set(initialPlayerSet);
+  }, [items]);
 
   const location = useLocation();
-  const pNum = location.state?.num || 5; 
+  const pNum = location.state?.num || 5;
 
+  //function returns a list of players
   const createPlayers = () => {
     let p_list = [];
     for (let i = 1; i <= pNum; i++) {
@@ -27,9 +54,10 @@ const GameRun =  ()  => {
     return p_list;
   };
 
-  const players = location.state?.players && location.state.players.length > 0
-  ? location.state.players
-  : createPlayers();
+  const players =
+    location.state?.players && location.state.players.length > 0
+      ? location.state.players
+      : createPlayers();
   const item_list = items;
 
   // function return a dictionary with key as player and value as assigned names, where one player has a unique name
@@ -64,12 +92,6 @@ const GameRun =  ()  => {
     return dict;
   };
 
-  useEffect(() => {
-    const initialPlayerSet = makeImposter([...item_list], players);
-    setPlayer_set(initialPlayerSet);
-  }, []);
-
-  //for some reason - doesnt convert null to object without the below code
   if (!player_set) {
     return <div>Loading...</div>;
   }
@@ -78,7 +100,7 @@ const GameRun =  ()  => {
 
   // Function to display the next key-value pair
   const handleNextClick = () => {
-    setIsVisible(false)
+    setIsVisible(false);
     if (currentIndex === entries.length - 1) {
       // If last player has been displayed, reset and create new player set
       const newPlayerSet = makeImposter([...item_list], players);
@@ -91,37 +113,37 @@ const GameRun =  ()  => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    setIsVisible(true);
-
+      setIsVisible(true);
     }, 1000);
-
-
   };
+  
   const handleClearClick = () => {
     setIsVisible(false);
   };
+
   const handleXClick = () => {
     setExitModal(true);
   };
+
   const handleResetClick = () => {
     const initialPlayerSet = makeImposter([...item_list], players);
     setPlayer_set(initialPlayerSet);
     setCurrentIndex(0); // Reset index to start from the first player
 
-    setIsVisible(true)
+    setIsVisible(true);
+  };
 
-  }
-    return (
+  return (
     <div className="game-run">
       <div className="game-run__display-area">
         {/* <Button 
         icon={<CloseCircleOutlined />}
         onClick={handleXClick} /> */}
-          <CloseCircleOutlined
-            style={{ color: "black",fontSize:20 }}
-            onClick={handleXClick}
-          />
-<Button onClick={handleResetClick} >Reset</Button>
+        <CloseCircleOutlined
+          style={{ color: "black", fontSize: 20 }}
+          onClick={handleXClick}
+        />
+        <Button onClick={handleResetClick}>Reset</Button>
         <Modal
           title="Are you sure you want to exit the game?"
           visible={exitModal}
@@ -136,7 +158,10 @@ const GameRun =  ()  => {
             </div>
           )}
           {isVisible && (
-          <p> next up : {`${entries[(currentIndex + 1) % entries.length][0]} `}</p>
+            <p>
+              {" "}
+              next up : {`${entries[(currentIndex + 1) % entries.length][0]} `}
+            </p>
           )}
         </div>
       </div>
@@ -159,6 +184,6 @@ const GameRun =  ()  => {
       </div>
     </div>
   );
-}
+};
 
 export default GameRun;
