@@ -39,8 +39,8 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* .game-mode__display-area p:hover {
+.game-mode__display-area p:hover {
     transform: scale(1.1);
     color: #FFC107; 
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-} */
+}

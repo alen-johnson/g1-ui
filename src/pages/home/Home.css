@@ -1,47 +1,117 @@
+/* Loader Styles */
+.loader {
+  width: 90vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--background-color);
+  font-family: 'Merriweather', serif;
+}
+
+.loader__bar {
+  width: 0%;
+  height: 10px;
+  background-color: #4E342E;
+  transition: width 0.1s linear;
+  margin-bottom: 20px;
+}
+
+.loader p {
+  font-size: 1.5rem;
+  color: #4E342E;
+}
+
+/* Main Home Screen Styles */
 .home {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background: var(--background-color);
-    background-size: cover;
-    background-position: center;
-    font-family: 'Merriweather', serif;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: var(--background-color);
+  background-size: cover;
+  background-position: center;
+  font-family: 'Merriweather', serif;
+}
+
+.home__icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+  animation: iconSlideIn 1s ease-out forwards;
+}
+
+.home__display-area {
+  width: 90%;
+  max-width: 800px;
+  margin: auto;
+  padding: 30px;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeIn 1.5s ease-out 0.5s forwards; /* Delay to ensure it appears after the icon */
+}
+
+.home__display-area p {
+  cursor: pointer;
+  color: #4E342E;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 20px 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s ease;
+  /* animation: fadeIn 0.6s ease-out forwards; */
+}
+
+.home__display-area p:hover {
+  transform: scale(1.1) rotate(2deg);
+  color: var(--text-color);
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease-in, color 0.3s ease-in;
+}
+
+.home__display-area p:nth-child(1) {
+  animation-delay: 0.3s;
+}
+.home__display-area p:nth-child(2) {
+  animation-delay: 0.6s;
+}
+.home__display-area p:nth-child(3) {
+  animation-delay: 0.9s;
+}
+
+/* Animations */
+@keyframes iconSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px) scale(0.8);
   }
-  
-  .home__display-area {
-    width: 90%;
-    max-width: 800px;
-    margin: auto;
-    padding: 30px;
-    box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 20px;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
-  
-  .home__display-area p {
-    cursor: pointer;
-    color: #4E342E;
-    font-size: 1.8rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin: 20px 0;
-    transition: all 0.4s ease;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
   }
-  
-  .home__display-area p:hover {
-    transform: scale(1.1);
-    color: var(--text-color);
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
+}

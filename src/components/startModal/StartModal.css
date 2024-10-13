@@ -17,6 +17,7 @@
     border-radius: 10px;
     padding: 50px;
     width: 50vw;
+    height: 70vh;
     display: flex;
     flex-direction: column;
 
@@ -27,3 +28,9 @@
     flex-direction: column;
     align-items: flex-end;
 }
+
+/* .modal p{
+    color: #d01010;
+    font-size: small;
+    background-color: #d01010;
+} */
