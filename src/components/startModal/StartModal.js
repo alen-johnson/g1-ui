@@ -38,6 +38,7 @@ const StartModal = ({ isOpen, closeModal }) => {
   
 
   const categories = [
+    "All",
     "Athletes",
     "World Leaders",
     "Living Things",
@@ -85,11 +86,11 @@ const StartModal = ({ isOpen, closeModal }) => {
             <p>Select Category</p>
             <Select
               mode="multiple"
-              maxTagCount={3}
+              maxTagCount={5}
               allowClear
               placeholder="Category"
               style={{ width: "100%" }}
-              disabled
+              // disabled
             >
               {categories.map((category, key) => {
                 return (
