@@ -1,30 +1,42 @@
 import React, { useEffect, useState } from "react";
 import "./GameRun.css";
-// import { items } from "../../assets/contents/contens";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Modal } from "antd";
 import { CloseCircleOutlined, StepForwardOutlined } from "@ant-design/icons";
 
 const GameRun = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [player_set, setPlayer_set] = useState(null);
+  const [playerSet, setPlayerSet] = useState(null);
   const [isVisible, setIsVisible] = useState(true);
   const [loading, setLoading] = useState(false);
   const [exitModal, setExitModal] = useState(false);
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
 
+  const category = location.state.category;
+  const pNum = location.state?.num || 5;
+
+  // Create players based on participants or default
+  const createPlayers = (playerCount) => {
+    return Array.from({ length: playerCount }, (_, i) => `Player ${i + 1}`);
+  };
+
+  const players =
+    location.state?.participants && location.state.participants.length > 0
+      ? location.state.participants
+      : createPlayers(pNum);
+
+  // Fetching content based on category
   useEffect(() => {
-    const fetchPlayers = async () => {
+    const fetchContent = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/athletes"); // Your backend endpoint
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        const names = data.map((item) => item.name);
+        const apiUrl = getApiUrl(category);
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error("Network response was not ok");
 
-        setItems(names); // Store fetched data in state
+        const data = await response.json();
+        setItems(data.map((item) => item.name)); // Store fetched data in state
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -32,79 +44,65 @@ const GameRun = () => {
       }
     };
 
-    fetchPlayers();
-  }, []);
+    fetchContent();
+  }, [category]);
 
-  //for some reason - doesnt convert null to object without the below code
+  // Initializing player set once items are fetched
   useEffect(() => {
-    const initialPlayerSet = makeImposter([...item_list], players);
-    setPlayer_set(initialPlayerSet);
+    if (items.length > 0) {
+      const initialPlayerSet = makeImposter([...items], players);
+      setPlayerSet(initialPlayerSet);
+    }
   }, [items]);
 
-  const location = useLocation();
-  const pNum = location.state?.num || 5;
-
-  //function returns a list of players
-  const createPlayers = () => {
-    let p_list = [];
-    for (let i = 1; i <= pNum; i++) {
-      p_list.push(`Player ${i}`);
+  // Switch case for determining API URL based on category
+  const getApiUrl = (category) => {
+    switch (category) {
+      case "Athletes":
+        return "http://localhost:5000/api/athletes";
+      case "Sports":
+        return "http://localhost:5000/api/sports";
+      case "Fiction":
+        return "http://localhost:5000/api/fictions";
+      case "Celebrities":
+        return "http://localhost:5000/api/celebrities";
+      default:
+        return "http://localhost:5000/api/athletes";
     }
-
-    return p_list;
   };
 
-  const players =
-    location.state?.players && location.state.players.length > 0
-      ? location.state.players
-      : createPlayers();
-  const item_list = items;
+  // Make imposter function assigns item names to players
+  const makeImposter = (items, players) => {
+    if (items.length < 2) return console.log("Start New Game");
 
-  // function return a dictionary with key as player and value as assigned names, where one player has a unique name
-  const makeImposter = (items, pl) => {
-    if (items.length < 2) {
-      console.log("Start New Game");
-    }
+    const imposterItem = getRandomItem(items);
+    const commonItem = getRandomItem(items);
 
-    let n = Math.floor(Math.random() * items.length);
-
-    let imposter_item = items[n];
-    items.splice(n, 1);
-    // console.log(imposter_item)
-
-    n = Math.floor(Math.random() * items.length);
-
-    let common_item = items[n];
-    items.splice(n, 1);
-    // console.log(common_item);
-
-    n = Math.floor(Math.random() * pl.length);
-    let dict = {};
-    //loop assigns item names for players
-    for (let i = 0; i < pl.length; i++) {
-      if (i === n) {
-        dict[pl[i]] = imposter_item;
-      } else {
-        dict[pl[i]] = common_item;
-      }
-    }
-
-    return dict;
+    const imposterIndex = Math.floor(Math.random() * players.length);
+    return players.reduce((dict, player, index) => {
+      dict[player] = index === imposterIndex ? imposterItem : commonItem;
+      return dict;
+    }, {});
   };
 
-  if (!player_set) {
-    return <div>Loading...</div>;
-  }
+  // Function to get random item from the list and remove it
+  const getRandomItem = (items) => {
+    const randomIndex = Math.floor(Math.random() * items.length);
+    const [item] = items.splice(randomIndex, 1);
+    return item;
+  };
 
-  const entries = Object.entries(player_set);
+  if (!playerSet) return <div>Loading...</div>;
 
-  // Function to display the next key-value pair
+  const entries = Object.entries(playerSet);
+
+  // Display the next key-value pair
   const handleNextClick = () => {
     setIsVisible(false);
+
     if (currentIndex === entries.length - 1) {
-      // If last player has been displayed, reset and create new player set
-      const newPlayerSet = makeImposter([...item_list], players);
-      setPlayer_set(newPlayerSet);
+      const newPlayerSet = makeImposter([...items], players);
+      setPlayerSet(newPlayerSet);
       setCurrentIndex(0); // Reset index to start from the first player
     } else {
       setCurrentIndex((prevIndex) => prevIndex + 1);
@@ -116,29 +114,24 @@ const GameRun = () => {
       setIsVisible(true);
     }, 1000);
   };
-  
+
   const handleClearClick = () => {
     setIsVisible(false);
   };
-
   const handleXClick = () => {
     setExitModal(true);
   };
 
   const handleResetClick = () => {
-    const initialPlayerSet = makeImposter([...item_list], players);
-    setPlayer_set(initialPlayerSet);
+    const newPlayerSet = makeImposter([...items], players);
+    setPlayerSet(newPlayerSet);
     setCurrentIndex(0); // Reset index to start from the first player
-
     setIsVisible(true);
   };
 
   return (
     <div className="game-run">
       <div className="game-run__display-area">
-        {/* <Button 
-        icon={<CloseCircleOutlined />}
-        onClick={handleXClick} /> */}
         <CloseCircleOutlined
           style={{ color: "black", fontSize: 20 }}
           onClick={handleXClick}
@@ -149,12 +142,12 @@ const GameRun = () => {
           visible={exitModal}
           onOk={() => navigate("/")}
           onCancel={() => setExitModal(false)}
-        ></Modal>
+        />
         <div className="game-run__box">
           {isVisible && (
             <div>
               <p>{`${entries[currentIndex][0]} :`}</p>
-              <p> {`  ${entries[currentIndex][1]}`}</p>
+              <p>{`  ${entries[currentIndex][1]}`}</p>
             </div>
           )}
           {isVisible && (
