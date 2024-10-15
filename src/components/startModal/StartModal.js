@@ -10,11 +10,12 @@ const StartModal = ({ isOpen, closeModal }) => {
   const [loading, setLoading] = useState(false);
   const [numberInput, setNumberInput] = useState(0);
   const [playerNames, setPlayerNames] = useState([]);
+  const [category, setCategory] = useState("All")
 
   const handleplay = () => {
     setLoading(true);
     setTimeout(() => {
-      navigate("/gamerun", { state: { num: numberInput, players: playerNames } }); // passing no. of players to gameRun
+      navigate("/gamerun", { state: { num: numberInput, participants: playerNames , category: category } }); // passing no. of players to gameRun
       closeModal();
     }, 2000);
   };
@@ -32,21 +33,19 @@ const StartModal = ({ isOpen, closeModal }) => {
   
     // Update the player's name based on user input
     updatedNames[index] = newName;
-  
     setPlayerNames(updatedNames);
   };
-  
+  const handleCategoryChange = (value) => {
+    setCategory(value)
+  }
 
   const categories = [
     "All",
-    "Athletes",
+    "Sports & Athletes",
     "World Leaders",
-    "Living Things",
     "Household",
-    "Historical Figures",
-    "Countries",
     "Celebrities",
-    "Movies & Fiction",
+    "Fiction",
   ];
 
   return (
@@ -85,11 +84,12 @@ const StartModal = ({ isOpen, closeModal }) => {
             {/* <Space> */}
             <p>Select Category</p>
             <Select
-              mode="multiple"
-              maxTagCount={5}
+              // mode="multiple"
+              // maxTagCount={5}
               allowClear
               placeholder="Category"
               style={{ width: "100%" }}
+              onChange={ (value) => handleCategoryChange(value)}
               // disabled
             >
               {categories.map((category, key) => {
