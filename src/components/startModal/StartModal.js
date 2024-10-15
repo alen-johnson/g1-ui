@@ -43,7 +43,6 @@ const StartModal = ({ isOpen, closeModal }) => {
     "All",
     "Sports & Athletes",
     "World Leaders",
-    "Living Things",
     "Household",
     "Celebrities",
     "Fiction",
