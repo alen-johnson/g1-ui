@@ -41,7 +41,7 @@ const StartModal = ({ isOpen, closeModal }) => {
 
   const categories = [
     "All",
-    "Athletes",
+    "Sports & Athletes",
     "World Leaders",
     "Living Things",
     "Household",

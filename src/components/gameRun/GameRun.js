@@ -58,16 +58,14 @@ const GameRun = () => {
   // Switch case for determining API URL based on category
   const getApiUrl = (category) => {
     switch (category) {
-      case "Athletes":
-        return "http://localhost:5000/api/athletes";
-      case "Sports":
+      case "Sports & Athletes":
         return "http://localhost:5000/api/sports";
       case "Fiction":
         return "http://localhost:5000/api/fictions";
       case "Celebrities":
         return "http://localhost:5000/api/celebrities";
       default:
-        return "http://localhost:5000/api/athletes";
+        return "http://localhost:5000/api/sports";
     }
   };
 
