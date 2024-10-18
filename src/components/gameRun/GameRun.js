@@ -140,10 +140,14 @@ const GameRun = () => {
         />
         <Button onClick={handleResetClick}>Reset</Button>
         <Modal
-          title="Are you sure you want to exit the game?"
+          title="Exit to main menu?"
           visible={exitModal}
           onOk={() => navigate("/")}
           onCancel={() => setExitModal(false)}
+          okText="Yes"
+          cancelText="No"
+          cancelButtonProps={{ className:''}}
+          okButtonProps={ {className: ''}}
         />
         <div className="game-run__box">
           {isVisible && (

@@ -5,7 +5,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-        background-color: #FFF7E0; /* Light Cream */
 }
 
 .game-run__display-area {
@@ -38,11 +37,10 @@
     align-items: center;
     text-align: center;
     font-size: 1.5rem;
-    color: #6D4C41; /* Warm brown */
+    color: #b55b9d; /* Warm brown */
 }
 
 .game-run__box {
-    border: 2px solid #FFE082; /* Soft Yellow */
     display: flex;
     width: 25rem;
     height: 10rem;
@@ -66,7 +64,7 @@
 }
 
 .game-run__button {
-    background-color: #FF7043; /* Bright Coral */
+    background-color: #43ecff; /* Bright Coral */
     color: #FFFFFF; /* White text */
     padding: 30px;
     font-size: 1.5rem;
