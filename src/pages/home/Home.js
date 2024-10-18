@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { question_mark, mag1, mag2 } from "../../assets/images/imageIndex";
 import "./Home.css";
 
 function Home() {
