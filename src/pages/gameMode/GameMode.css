@@ -5,9 +5,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: linear-gradient(135deg, rgba(255, 204, 128, 0.9), rgba(255, 94, 77, 0.8));
-    background-size: cover;
-    background-position: center;
     font-family: 'Merriweather', serif;
 }
 
@@ -17,9 +14,7 @@
     margin: auto;
     padding: 30px;
     box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.9);
     border-radius: 20px;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,18 +24,25 @@
 
 .game-mode__display-area p {
     cursor: pointer;
-    color: #4E342E;
+    color: #d4af37 ;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     font-size: 1.8rem;
-    font-weight: bold;
-    text-transform: uppercase;
     letter-spacing: 2px;
     margin: 20px 0;
     transition: all 0.4s ease;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+    margin: 20px 0;
+    padding: 10px 40px;
 }
 
 .game-mode__display-area p:hover {
-    transform: scale(1.1);
-    color: #FFC107; 
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.8);
+  color: #eb9500;
+  transform: translateY(-5px);
 }

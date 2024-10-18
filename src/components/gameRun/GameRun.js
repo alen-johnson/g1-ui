@@ -138,12 +138,25 @@ const GameRun = () => {
           style={{ color: "black", fontSize: 20 }}
           onClick={handleXClick}
         />
-        <Button onClick={handleResetClick}>Reset</Button>
+        <div class="buttons">
+          <button class="btn" onClick={handleResetClick}>
+            <span></span>
+            <p
+              data-start="good luck!"
+              data-text="start!"
+              data-title="new game"
+            ></p>
+          </button>
+        </div>
         <Modal
-          title="Are you sure you want to exit the game?"
+          title="Exit to main menu?"
           visible={exitModal}
           onOk={() => navigate("/")}
           onCancel={() => setExitModal(false)}
+          okText="Yes"
+          cancelText="No"
+          cancelButtonProps={{ className: "" }}
+          okButtonProps={{ className: "" }}
         />
         <div className="game-run__box">
           {isVisible && (

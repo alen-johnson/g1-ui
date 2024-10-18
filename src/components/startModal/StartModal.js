@@ -5,17 +5,22 @@ import { Button, Input, Select, Space, Spin } from "antd";
 import { CloseCircleOutlined, SyncOutlined } from "@ant-design/icons";
 
 const StartModal = ({ isOpen, closeModal }) => {
-
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [numberInput, setNumberInput] = useState(0);
   const [playerNames, setPlayerNames] = useState([]);
-  const [category, setCategory] = useState("All")
+  const [category, setCategory] = useState("All");
 
   const handleplay = () => {
     setLoading(true);
     setTimeout(() => {
-      navigate("/gamerun", { state: { num: numberInput, participants: playerNames , category: category } }); // passing no. of players to gameRun
+      navigate("/gamerun", {
+        state: {
+          num: numberInput,
+          participants: playerNames,
+          category: category,
+        },
+      }); // passing no. of players to gameRun
       closeModal();
     }, 2000);
   };
@@ -23,21 +28,23 @@ const StartModal = ({ isOpen, closeModal }) => {
   const handleNumberChange = (value) => {
     setNumberInput(value);
     // Set player names to default values when the number changes
-    setPlayerNames(Array.from({ length: value }, (_, index) => `Player ${index + 1}`));
+    setPlayerNames(
+      Array.from({ length: value }, (_, index) => `Player ${index + 1}`)
+    );
   };
-  
+
   /* Used to update player names from user */
   const handlePlayerNameChange = (index, event) => {
     const updatedNames = [...playerNames];
     const newName = event.target.value;
-  
+
     // Update the player's name based on user input
     updatedNames[index] = newName;
     setPlayerNames(updatedNames);
   };
   const handleCategoryChange = (value) => {
-    setCategory(value)
-  }
+    setCategory(value);
+  };
 
   const categories = [
     "All",
@@ -89,7 +96,7 @@ const StartModal = ({ isOpen, closeModal }) => {
               allowClear
               placeholder="Category"
               style={{ width: "100%" }}
-              onChange={ (value) => handleCategoryChange(value)}
+              onChange={(value) => handleCategoryChange(value)}
               // disabled
             >
               {categories.map((category, key) => {
@@ -101,9 +108,6 @@ const StartModal = ({ isOpen, closeModal }) => {
               })}
             </Select>
             {/* </Space> */}
-            <p>
-            <SyncOutlined spin/>
-            </p>
             <Spin spinning={loading}>
               <Button onClick={handleplay}>Start</Button>
             </Spin>
