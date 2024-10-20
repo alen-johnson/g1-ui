@@ -20,9 +20,45 @@ function Home() {
   return (
     <div className="home">
       <div className="home__display-area">
-        <p onClick={handleStartCLick}>Start Game</p>
-        <p onClick={handleSettingClick}>Settings</p>
-        <p onClick={handleHelpClick}>Help</p>
+
+<button onClick={handleStartCLick}>
+    P L A Y
+    <div id="clip">
+        <div id="leftTop" class="corner"></div>
+        <div id="rightBottom" class="corner"></div>
+        <div id="rightTop" class="corner"></div>
+        <div id="leftBottom" class="corner"></div>
+    </div> 
+    <span id="rightArrow" class="arrow"></span>
+    <span id="leftArrow" class="arrow"></span>
+</button>
+
+
+<button onClick={handleSettingClick}>
+    S E T T I N G S
+    <div id="clip">
+        <div id="leftTop" class="corner"></div>
+        <div id="rightBottom" class="corner"></div>
+        <div id="rightTop" class="corner"></div>
+        <div id="leftBottom" class="corner"></div>
+    </div> 
+    <span id="rightArrow" class="arrow"></span>
+    <span id="leftArrow" class="arrow"></span>
+</button>
+
+
+<button onClick={handleHelpClick}>
+    H E L P
+    <div id="clip">
+        <div id="leftTop" class="corner"></div>
+        <div id="rightBottom" class="corner"></div>
+        <div id="rightTop" class="corner"></div>
+        <div id="leftBottom" class="corner"></div>
+    </div> 
+    <span id="rightArrow" class="arrow"></span>
+    <span id="leftArrow" class="arrow"></span>
+</button>
+
       </div>
     </div>
   );

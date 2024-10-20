@@ -21,63 +21,168 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeIn 1.5s ease-out 0.5s forwards; /* Delay to ensure it appears after the icon */
+
+}
+
+
+button {
   position: relative;
-}
-
-.home__display-area p {
-  font-size: 2rem;
-  margin: 20px 0;
-  padding: 10px 40px;
   cursor: pointer;
-  color: #d4af37 ;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  width: 14em;
+  height: 5em;
+  outline: none;
+  transition: 0.1s;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #49c8f7;
+  margin: 1rem;
 }
 
-
-.home__display-area p:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.8);
-  color: #eb9500;
-  transform: translateY(-5px);
+#clip {
+  --color: #122c59;
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  border: 5px double var(--color);
+  box-shadow: inset 0px 0px 15px #064c81;
+  -webkit-clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
 }
 
-.home__display-area p:nth-child(1) {
-  animation-delay: 0.3s;
-}
-.home__display-area p:nth-child(2) {
-  animation-delay: 0.6s;
-}
-.home__display-area p:nth-child(3) {
-  animation-delay: 0.9s;
+.arrow {
+  position: absolute;
+  transition: 0.2s;
+  background-color: #2761c3;
+  top: 35%;
+  width: 11%;
+  height: 30%;
 }
 
-/* Animations */
-@keyframes iconSlideIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-100px) scale(0.8);
+#leftArrow {
+  left: -13.5%;
+  -webkit-clip-path: polygon(100% 0, 100% 100%, 0 50%);
+}
+
+#rightArrow {
+  -webkit-clip-path: polygon(100% 49%, 0 0, 0 100%);
+  left: 114%;
+}
+
+button:hover #rightArrow {
+  background-color: #0e6c56;
+  left: -15%;
+  animation: 0.6s ease-in-out both infinite alternate rightArrow8;
+}
+
+button:hover #leftArrow {
+  background-color: #0e6c56;
+  left: 114%;
+  animation: 0.6s ease-in-out both infinite alternate leftArrow8;
+}
+
+.corner {
+  position: absolute;
+  width: 4em;
+  height: 4em;
+  background-color: #2761c3;
+  box-shadow: inset 1px 1px 8px #2781c3;
+  transform: scale(1) rotate(45deg);
+  transition: 0.2s;
+}
+
+#rightTop {
+  top: -1.98em;
+  left: 91%;
+}
+
+#leftTop {
+  top: -1.96em;
+  left: -3.0em;
+}
+
+#leftBottom {
+  top: 2.10em;
+  left: -2.15em;
+}
+
+#rightBottom {
+  top: 45%;
+  left: 88%;
+}
+
+button:hover #leftTop {
+  animation: 0.1s ease-in-out 0.05s both changeColor8, 0.2s linear 0.4s both lightEffect8;
+}
+
+button:hover #rightTop {
+  animation: 0.1s ease-in-out 0.15s both changeColor8, 0.2s linear 0.4s both lightEffect8;
+}
+
+button:hover #rightBottom {
+  animation: 0.1s ease-in-out 0.25s both changeColor8, 0.2s linear 0.4s both lightEffect8;
+}
+
+button:hover #leftBottom {
+  animation: 0.1s ease-in-out 0.35s both changeColor8, 0.2s linear 0.4s both lightEffect8;
+}
+
+button:hover .corner {
+  transform: scale(1.25) rotate(45deg);
+}
+
+button:hover #clip {
+  animation: 0.2s ease-in-out 0.55s both greenLight8;
+  --color: #0e6c56;
+}
+
+@keyframes changeColor8 {
+  from {
+    background-color: #2781c3;
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+
+  to {
+    background-color: #27c39f;
   }
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
+@keyframes lightEffect8 {
+  from {
+    box-shadow: 1px 1px 5px #0e6c56;
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+
+  to {
+    box-shadow: 0 0 2px #0e6c56;
+  }
+}
+
+@keyframes greenLight8 {
+  from {
+  }
+
+  to {
+    box-shadow: inset 0px 0px 32px #0e6c56;
+  }
+}
+
+@keyframes leftArrow8 {
+  from {
+    transform: translate(0px);
+  }
+
+  to {
+    transform: translateX(10px);
+  }
+}
+
+@keyframes rightArrow8 {
+  from {
+    transform: translate(0px);
+  }
+
+  to {
+    transform: translateX(-10px);
   }
 }
