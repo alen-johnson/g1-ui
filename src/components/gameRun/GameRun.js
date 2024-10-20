@@ -138,8 +138,8 @@ const GameRun = () => {
           style={{ color: "black", fontSize: 20 }}
           onClick={handleXClick}
         />
-        <div class="buttons">
-          <button class="btn" onClick={handleResetClick}>
+        <div class="game-run__buttons">
+          <button class="game-run__buttons-btn" onClick={handleResetClick}>
             <span></span>
             <p
               data-start="good luck!"
