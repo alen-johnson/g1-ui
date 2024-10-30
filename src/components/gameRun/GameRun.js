@@ -172,8 +172,8 @@ const GameRun = () => {
             </p>
           )}
         </div>
-      </div>
-      <div className="game-run__btns">
+
+        <div className="game-run__btns">
         <Button
           className="game-run__button"
           icon={<StepForwardOutlined />}
@@ -189,6 +189,11 @@ const GameRun = () => {
         >
           Clear
         </Button>
+      </div>
+      </div>
+      
+      <div>
+        <p>Scoreboard</p>
       </div>
     </div>
   );
