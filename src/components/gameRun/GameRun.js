@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./GameRun.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Modal } from "antd";
+import { Button, Flex, Modal, Select, Tag } from "antd";
 import { CloseCircleOutlined, StepForwardOutlined } from "@ant-design/icons";
 
 const GameRun = () => {
@@ -10,7 +10,10 @@ const GameRun = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [loading, setLoading] = useState(false);
   const [exitModal, setExitModal] = useState(false);
+  const [flipped, setFlipped] = useState(false);
   const [items, setItems] = useState([]);
+  const [selectedTags, setSelectedTags] = React.useState([]);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -104,17 +107,17 @@ const GameRun = () => {
 
     if (currentIndex === entries.length - 1) {
       const newPlayerSet = makeImposter([...items], players);
+      setFlipped(true);
       setPlayerSet(newPlayerSet);
       setCurrentIndex(0); // Reset index to start from the first player
     } else {
       setCurrentIndex((prevIndex) => prevIndex + 1);
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+        setIsVisible(true);
+      }, 1000);
     }
-
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setIsVisible(true);
-    }, 1000);
   };
 
   const handleClearClick = () => {
@@ -131,69 +134,105 @@ const GameRun = () => {
     setIsVisible(true);
   };
 
+  const handleWinnerChange = (winner) => {
+
+  }
+  const handleOKClick = () => {
+    setTimeout(() => {
+    setFlipped(false);
+    setIsVisible(false)
+    }, 1000);
+    const newPlayerSet = makeImposter([...items], players);
+    setPlayerSet(newPlayerSet);
+    setCurrentIndex(0); // Reset index to start from the first player
+    setIsVisible(true);
+  };
+
+
   return (
     <div className="game-run">
-      <div className="game-run__display-area">
-        <CloseCircleOutlined
-          style={{ color: "black", fontSize: 20 }}
-          onClick={handleXClick}
-        />
-        <div class="game-run__buttons">
-          <button class="game-run__buttons-btn" onClick={handleResetClick}>
-            <span></span>
-            <p
-              data-start="good luck!"
-              data-text="start!"
-              data-title="new game"
-            ></p>
-          </button>
-        </div>
-        <Modal
-          title="Exit to main menu?"
-          visible={exitModal}
-          onOk={() => navigate("/")}
-          onCancel={() => setExitModal(false)}
-          okText="Yes"
-          cancelText="No"
-          cancelButtonProps={{ className: "" }}
-          okButtonProps={{ className: "" }}
-        />
-        <div className="game-run__box">
-          {isVisible && (
-            <div>
-              <p>{`${entries[currentIndex][0]} :`}</p>
-              <p>{`  ${entries[currentIndex][1]}`}</p>
-            </div>
-          )}
-          {isVisible && (
-            <p>
-              {" "}
-              next up : {`${entries[(currentIndex + 1) % entries.length][0]} `}
-            </p>
-          )}
-        </div>
+      <div className={`game-run__display-area ${flipped ? "flipped" : ""}`}>
+        <div className="front">
+          <CloseCircleOutlined
+            style={{ color: "black", fontSize: 20 }}
+            onClick={handleXClick}
+          />
+          <div class="game-run__buttons">
+            <button class="game-run__buttons-btn" onClick={handleResetClick}>
+              <span></span>
+              <p
+                data-start="good luck!"
+                data-text="start!"
+                data-title="new set"
+              ></p>
+            </button>
+          </div>
+          <Modal
+            title="Exit to main menu?"
+            visible={exitModal}
+            onOk={() => navigate("/")}
+            onCancel={() => setExitModal(false)}
+            okText="Yes"
+            cancelText="No"
+            cancelButtonProps={{ className: "" }}
+            okButtonProps={{ className: "" }}
+          />
+          <div className="game-run__box">
+            {isVisible && (
+              <div>
+                <p>{`${entries[currentIndex][0]} :`}</p>
+                <p>{`  ${entries[currentIndex][1]}`}</p>
+              </div>
+            )}
+            {isVisible && (
+              <p>
+                {" "}
+                next up :{" "}
+                {`${entries[(currentIndex + 1) % entries.length][0]} `}
+              </p>
+            )}
+          </div>
 
-        <div className="game-run__btns">
-        <Button
-          className="game-run__button"
-          icon={<StepForwardOutlined />}
-          loading={loading}
-          onClick={handleNextClick}
-        >
-          Next
-        </Button>
+          <div className="game-run__btns">
+            <Button
+              className="game-run__button"
+              icon={<StepForwardOutlined />}
+              loading={loading}
+              onClick={handleNextClick}
+            >
+              Next
+            </Button>
 
-        <Button
-          className="game-run__button game-run__button--clear"
-          onClick={handleClearClick}
-        >
-          Clear
-        </Button>
+            <Button
+              className="game-run__button game-run__button--clear"
+              onClick={handleClearClick}
+            >
+              Clear
+            </Button>
+          </div>
+        </div>
+        <div className="back">
+        <Select
+              mode="multiple"
+              allowClear
+              placeholder="Winner"
+              style={{ width: "40%" }}
+              onChange={(value) => handleWinnerChange(value)}
+            >
+              {players.map((p, key) => {
+                return (
+                  <Select.Option key={key} value={p}>
+                  </Select.Option>
+                );
+              })}
+            </Select>
+          <Button onClick={handleOKClick}>OK</Button>
+        </div>
       </div>
-      </div>
-      
-      <div>
-        <p>Scoreboard</p>
+
+      <div >
+        <h2>Scoreboard</h2>
+
       </div>
     </div>
   );
