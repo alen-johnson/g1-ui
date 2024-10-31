@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./GameRun.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Flex, Modal, Select, Tag } from "antd";
+import { Button, Drawer, Modal, Select, Tag } from "antd";
 import { CloseCircleOutlined, StepForwardOutlined } from "@ant-design/icons";
+import { ScoreboardDrawer } from "../componentsIndex";
 
 const GameRun = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -34,7 +35,8 @@ const GameRun = () => {
     return acc
   }, {})
 
-  const [scores, setScores] = useState(initialScores)
+  const [scores, setScores] = useState(initialScores);
+  const [open, setOpen] = useState(false);
   // Fetching content based on category
   useEffect(() => {
     const fetchContent = async () => {
@@ -184,22 +186,34 @@ const GameRun = () => {
     setScores((prevScores) => {
       const newScores = { ...prevScores };
 
-      // Increment score by 3 for winners
+      if(selectedPlayers.length>1){
       selectedPlayers.forEach((winner) => {
-        newScores[winner] += 3;
+        newScores[winner] += 2;
       });
 
-      // Decrement score by 1 for non-winners
       for (const player in newScores) {
         if (!selectedPlayers.includes(player)) {
           newScores[player] -= 1;
         }
       }
+    }else{
+      selectedPlayers.forEach((winner) => {
+        newScores[winner] += 3;
+      });
 
+      for (const player in newScores) {
+        if (!selectedPlayers.includes(player)) {
+          newScores[player] -= 2;
+        }
+      }
+    }
       return newScores;
     });
   };
-
+ 
+  const showScoreboard = () => {
+    setOpen(!open);
+  }
 
   return (
     <div className="game-run">
@@ -283,12 +297,10 @@ const GameRun = () => {
       </div>
 
       <div className="game-run__scoreboard">
-        <h2>Scoreboard</h2>
-        <ul>
-        {Object.entries(scores).map(([player, score]) => (
-          <li key={player}>{player}: {score}</li>
-        ))}
-      </ul>
+        <Button onClick={showScoreboard}>Scoreboard</Button>
+        <Drawer title ="Scoreboard" onClose={showScoreboard} open={open}>
+      <ScoreboardDrawer {...scores} />
+      </Drawer>
       </div>
     </div>
   );
