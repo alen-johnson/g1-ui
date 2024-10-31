@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./GameRun.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Modal } from "antd";
+import { Button, Drawer, Modal, Select, Tag } from "antd";
 import { CloseCircleOutlined, StepForwardOutlined } from "@ant-design/icons";
+import { ScoreboardDrawer } from "../componentsIndex";
 
 const GameRun = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -10,7 +11,10 @@ const GameRun = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [loading, setLoading] = useState(false);
   const [exitModal, setExitModal] = useState(false);
+  const [flipped, setFlipped] = useState(false);
   const [items, setItems] = useState([]);
+  const [selectedPlayers, setSelectedPlayers] = useState([]);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,26 +30,55 @@ const GameRun = () => {
     location.state?.participants && location.state.participants.length > 0
       ? location.state.participants
       : createPlayers(pNum);
+  const initialScores = players.reduce((acc, player) => {
+    acc[player] = 0;
+    return acc
+  }, {})
 
+  const [scores, setScores] = useState(initialScores);
+  const [open, setOpen] = useState(false);
   // Fetching content based on category
   useEffect(() => {
     const fetchContent = async () => {
+      setLoading(true); // Start loading when fetch begins
       try {
-        const apiUrl = getApiUrl(category);
-        const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error("Network response was not ok");
+        if (category === "All") {
+          const urls  = getApiUrl(category);
 
-        const data = await response.json();
-        setItems(data.map((item) => item.name)); // Store fetched data in state
+          // Fetch all categories in parallel
+          const responses = await Promise.all(urls.map((url) => fetch(url)));
+  
+          // Check for errors in any fetch response
+          for (const response of responses) {
+            if (!response.ok) throw new Error("Network response was not ok");
+          }
+  
+          // Parse JSON data from all responses
+          const dataPromises = responses.map((response) => response.json());
+          const allData = await Promise.all(dataPromises);
+  
+          // Combine all results and map to item names
+          const combinedItems = allData.flat().map((item) => item.name);
+          setItems(combinedItems); // Set combined data in state
+        } else {
+          // For specific categories, fetch a single URL
+          const apiUrl = getApiUrl(category);
+          const response = await fetch(apiUrl);
+          if (!response.ok) throw new Error("Network response was not ok");
+  
+          const data = await response.json();
+          setItems(data.map((item) => item.name));
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
         setLoading(false); // Stop loading once fetch is complete
       }
     };
-
+  
     fetchContent();
   }, [category]);
+  
 
   // Initializing player set once items are fetched
   useEffect(() => {
@@ -69,7 +102,13 @@ const GameRun = () => {
       case "Household":
         return "http://localhost:5000/api/Households";
       default:
-        return "http://localhost:5000/api/sports";
+        return [
+          "http://localhost:5000/api/sports",
+          "http://localhost:5000/api/fictions",
+          "http://localhost:5000/api/celebrities",
+          "http://localhost:5000/api/leaders",
+          "http://localhost:5000/api/Households"
+        ];
     }
   };
 
@@ -104,17 +143,17 @@ const GameRun = () => {
 
     if (currentIndex === entries.length - 1) {
       const newPlayerSet = makeImposter([...items], players);
+      setFlipped(true);
       setPlayerSet(newPlayerSet);
       setCurrentIndex(0); // Reset index to start from the first player
     } else {
       setCurrentIndex((prevIndex) => prevIndex + 1);
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+        setIsVisible(true);
+      }, 1000);
     }
-
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setIsVisible(true);
-    }, 1000);
   };
 
   const handleClearClick = () => {
@@ -131,64 +170,137 @@ const GameRun = () => {
     setIsVisible(true);
   };
 
+  const handleSelectedPlayers= (winners) => {
+    setSelectedPlayers(winners);
+  }
+  const handleOKClick = () => {
+    setTimeout(() => {
+    setFlipped(false);
+    setIsVisible(false)
+    }, 1000);
+    const newPlayerSet = makeImposter([...items], players);
+    setPlayerSet(newPlayerSet);
+    setCurrentIndex(0); // Reset index to start from the first player
+    setIsVisible(true);
+
+    setScores((prevScores) => {
+      const newScores = { ...prevScores };
+
+      if(selectedPlayers.length>1){
+      selectedPlayers.forEach((winner) => {
+        newScores[winner] += 2;
+      });
+
+      for (const player in newScores) {
+        if (!selectedPlayers.includes(player)) {
+          newScores[player] -= 1;
+        }
+      }
+    }else{
+      selectedPlayers.forEach((winner) => {
+        newScores[winner] += 3;
+      });
+
+      for (const player in newScores) {
+        if (!selectedPlayers.includes(player)) {
+          newScores[player] -= 2;
+        }
+      }
+    }
+      return newScores;
+    });
+  };
+ 
+  const showScoreboard = () => {
+    setOpen(!open);
+  }
+
   return (
     <div className="game-run">
-      <div className="game-run__display-area">
-        <CloseCircleOutlined
-          style={{ color: "black", fontSize: 20 }}
-          onClick={handleXClick}
-        />
-        <div class="game-run__buttons">
-          <button class="game-run__buttons-btn" onClick={handleResetClick}>
-            <span></span>
-            <p
-              data-start="good luck!"
-              data-text="start!"
-              data-title="new game"
-            ></p>
-          </button>
+      <div className={`game-run__display-area ${flipped ? "flipped" : ""}`}>
+        <div className="front">
+          <CloseCircleOutlined
+            style={{ color: "black", fontSize: 20 }}
+            onClick={handleXClick}
+          />
+          <div class="game-run__buttons">
+            <button class="game-run__buttons-btn" onClick={handleResetClick}>
+              <span></span>
+              <p
+                data-start="good luck!"
+                data-text="start!"
+                data-title="new set"
+              ></p>
+            </button>
+          </div>
+          <Modal
+            title="Exit to main menu?"
+            visible={exitModal}
+            onOk={() => navigate("/")}
+            onCancel={() => setExitModal(false)}
+            okText="Yes"
+            cancelText="No"
+            cancelButtonProps={{ className: "" }}
+            okButtonProps={{ className: "" }}
+          />
+          <div className="game-run__box">
+            {isVisible && (
+              <div>
+                <p>{`${entries[currentIndex][0]} :`}</p>
+                <p>{`  ${entries[currentIndex][1]}`}</p>
+              </div>
+            )}
+            {isVisible && (
+              <p>
+                {" "}
+                next up :{" "}
+                {`${entries[(currentIndex + 1) % entries.length][0]} `}
+              </p>
+            )}
+          </div>
+
+          <div className="game-run__btns">
+            <Button
+              className="game-run__button"
+              icon={<StepForwardOutlined />}
+              loading={loading}
+              onClick={handleNextClick}
+            >
+              Next
+            </Button>
+
+            <Button
+              className="game-run__button game-run__button--clear"
+              onClick={handleClearClick}
+            >
+              Clear
+            </Button>
+          </div>
         </div>
-        <Modal
-          title="Exit to main menu?"
-          visible={exitModal}
-          onOk={() => navigate("/")}
-          onCancel={() => setExitModal(false)}
-          okText="Yes"
-          cancelText="No"
-          cancelButtonProps={{ className: "" }}
-          okButtonProps={{ className: "" }}
-        />
-        <div className="game-run__box">
-          {isVisible && (
-            <div>
-              <p>{`${entries[currentIndex][0]} :`}</p>
-              <p>{`  ${entries[currentIndex][1]}`}</p>
-            </div>
-          )}
-          {isVisible && (
-            <p>
-              {" "}
-              next up : {`${entries[(currentIndex + 1) % entries.length][0]} `}
-            </p>
-          )}
+        <div className="back">
+        <Select
+              mode="multiple"
+              allowClear
+              placeholder="Winner"
+              style={{ width: "40%" }}
+              onChange={(value) => handleSelectedPlayers(value)}
+            >
+              {players.map((p, key) => {
+                return (
+                  <Select.Option key={key} value={p}>
+                  </Select.Option>
+                );
+              })}
+            </Select>
+          <Button onClick={handleOKClick}>OK</Button>
         </div>
       </div>
-      <div className="game-run__btns">
-        <Button
-          className="game-run__button"
-          icon={<StepForwardOutlined />}
-          loading={loading}
-          onClick={handleNextClick}
-        >
-          Next
-        </Button>
 
-        <Button
-          className="game-run__button game-run__button--clear"
-          onClick={handleClearClick}
-        >
-          Clear
-        </Button>
+      <div className="game-run__scoreboard">
+        <Button onClick={showScoreboard}>Scoreboard</Button>
+        <Drawer title ="Scoreboard" onClose={showScoreboard} open={open}>
+      <ScoreboardDrawer {...scores} />
+      </Drawer>
       </div>
     </div>
   );
