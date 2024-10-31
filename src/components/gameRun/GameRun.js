@@ -12,7 +12,7 @@ const GameRun = () => {
   const [exitModal, setExitModal] = useState(false);
   const [flipped, setFlipped] = useState(false);
   const [items, setItems] = useState([]);
-  const [selectedTags, setSelectedTags] = React.useState([]);
+  const [selectedPlayers, setSelectedPlayers] = useState([]);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -29,7 +29,12 @@ const GameRun = () => {
     location.state?.participants && location.state.participants.length > 0
       ? location.state.participants
       : createPlayers(pNum);
+  const initialScores = players.reduce((acc, player) => {
+    acc[player] = 0;
+    return acc
+  }, {})
 
+  const [scores, setScores] = useState(initialScores)
   // Fetching content based on category
   useEffect(() => {
     const fetchContent = async () => {
@@ -134,8 +139,8 @@ const GameRun = () => {
     setIsVisible(true);
   };
 
-  const handleWinnerChange = (winner) => {
-
+  const handleSelectedPlayers= (winners) => {
+    setSelectedPlayers(winners);
   }
   const handleOKClick = () => {
     setTimeout(() => {
@@ -146,6 +151,24 @@ const GameRun = () => {
     setPlayerSet(newPlayerSet);
     setCurrentIndex(0); // Reset index to start from the first player
     setIsVisible(true);
+
+    setScores((prevScores) => {
+      const newScores = { ...prevScores };
+
+      // Increment score by 3 for winners
+      selectedPlayers.forEach((winner) => {
+        newScores[winner] += 3;
+      });
+
+      // Decrement score by 1 for non-winners
+      for (const player in newScores) {
+        if (!selectedPlayers.includes(player)) {
+          newScores[player] -= 1;
+        }
+      }
+
+      return newScores;
+    });
   };
 
 
@@ -217,7 +240,7 @@ const GameRun = () => {
               allowClear
               placeholder="Winner"
               style={{ width: "40%" }}
-              onChange={(value) => handleWinnerChange(value)}
+              onChange={(value) => handleSelectedPlayers(value)}
             >
               {players.map((p, key) => {
                 return (
@@ -230,9 +253,13 @@ const GameRun = () => {
         </div>
       </div>
 
-      <div >
+      <div className="game-run__scoreboard">
         <h2>Scoreboard</h2>
-
+        <ul>
+        {Object.entries(scores).map(([player, score]) => (
+          <li key={player}>{player}: {score}</li>
+        ))}
+      </ul>
       </div>
     </div>
   );

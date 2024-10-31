@@ -280,6 +280,9 @@
   outline: 0;
 }
 
+.game-run__scoreboard{
+  background-color: aliceblue;
+}
 @keyframes start {
   from {
     top: -50%;
