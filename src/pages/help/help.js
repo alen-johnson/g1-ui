@@ -1,16 +1,16 @@
 import React from "react";
-
+import "./help.css"
 function Help() {
   return (
     <div>
-      <div class="card">
-        <div class="wrap">
-          <div class="terminal">
-            <div class="body">
-              <pre class="pre">
+      <div className="card">
+        <div className="wrap">
+          <div className="terminal">
+            <div className="body">
+              <pre className="pre">
                 <code>-&nbsp;</code>
                 <code>By&nbsp;</code>
-                <code class="cmd" data-cmd="ALEN J NINAN "></code>
+                <code className="cmd" data-cmd="ALEN J NINAN "></code>
               </pre>
             </div>
           </div>
