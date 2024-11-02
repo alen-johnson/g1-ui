@@ -2,9 +2,125 @@
   width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: row;
+
+}
+
+.game-run__side {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-run__menu-btn {
+  width: 208px;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  transition: all 0.5s ease-in-out;
+  font-size: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  background: #00bcd4; /* Cyan */
+  color: #e0e0e0; /* Light gray text */
+}
+
+.game-run__menu-btn:hover {
+  background-color: #0097a7; /* Darker cyan */
+  color: #ffffff; /* Bright white text */
+  box-shadow: 0 0 20px #1de9b6; /* Teal glow */
+}
+
+.game-run__menu-btn .game-run__menu-icon {
+  position: absolute;
+  height: 40px;
+  width: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s;
+}
+
+.game-run__menu-btn .game-run__menu-text {
+  transform: translateX(55px);
+}
+
+.game-run__menu-btn:hover .game-run__menu-icon {
+  width: 225px;
+}
+
+.game-run__menu-btn:hover .game-run__menu-text {
+  transition: all 0.5s;
+  opacity: 0;
+}
+
+.game-run__menu-btn:focus {
+  outline: none;
+}
+
+.game-run__menu-btn:active .game-run__menu-icon {
+  transform: scale(0.85);
+}
+
+.game-run__scoreboard {
+  padding: 10px;
+}
+
+.game-run__scoreboard button {
+  position: relative;
+  font-size: 16px;
+  height: 3em;
+  padding: 0 3em;
+  border: none;
+  background-color: #1b1bc4;
+  color: #e0e0e0; /* Light gray text */
+  text-transform: uppercase;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.game-run__scoreboard button::before {
+  content: '';
+  display: block;
+  position: absolute;
+  z-index: 0;
+  bottom: 0;
+  left: 0;
+  height: 0px;
+  width: 100%;
+  background: linear-gradient(90deg, #1b59c4 20%, #07287c 100%);
+  transition: 0.2s;
+}
+
+.game-run__scoreboard button .label {
+  position: relative;
+}
+
+.game-run__scoreboard button .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3em;
+  width: 3em;
+  position: absolute;
+  top: 3em;
+  right: 0;
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.game-run__scoreboard button:hover::before {
+  height: 100%;
+}
+
+.game-run__scoreboard button:hover .icon {
+  top: 0;
+  opacity: 1;
 }
 
 .game-run__display-area {
@@ -14,13 +130,12 @@
   flex: 1;
   width: 100%;
   max-width: 1200px;
-  margin: auto;
   box-sizing: border-box;
-  padding: 20px;
   align-items: center;
   justify-content: center;
   border-radius: 15px;
 }
+
 .game-run__display-area .front,
 .game-run__display-area .back {
   position: absolute;
@@ -45,7 +160,6 @@
   transform: rotateY(0deg);
 }
 
-
 .game-run__box {
   display: flex;
   width: 25rem;
@@ -56,8 +170,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 15px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); /* Slightly darker shadow for depth */
-  background-color: rgba(255, 255, 255, 0.1); /* Slight white background for contrast */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .game-run__box div {
@@ -74,10 +188,8 @@
   align-items: center;
   text-align: center;
   font-size: 1.5rem;
-  color: #ffffff; /* White for better contrast */
+  color: #ffffff;
 }
-
-
 
 .game-run__btns {
   display: flex;
@@ -90,8 +202,8 @@
 }
 
 .game-run__button {
-  background-color: #007bff; /* Bright blue */
-  color: #ffffff; /* White text */
+  background-color: #00bcd4; /* Cyan */
+  color: #e0e0e0; /* Light gray text */
   padding: 30px;
   font-size: 1.5rem;
   border-radius: 10px;
@@ -101,8 +213,8 @@
 }
 
 .game-run__button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-  color: #e9ecef; /* Light grey text on hover */
+  background-color: #0097a7; /* Darker cyan */
+  color: #ffffff; /* White text */
   transform: scale(1.1);
 }
 
@@ -116,9 +228,9 @@
 .game-run__buttons button {
   width: 150px;
   height: 50px;
-  background-color: #007bff; /* Bright blue */
+  background-color: #ffc107; /* Amber */
   margin: 20px;
-  color: #ffffff; /* White text */
+  color: #ffffff;
   position: relative;
   overflow: hidden;
   font-size: 14px;
@@ -140,7 +252,7 @@
   position: absolute;
   width: 0;
   height: 2px;
-  background-color: #44d8a4; /* Soft teal */
+  background-color: #f7422e;
   transition: all 0.3s cubic-bezier(0.35, 0.1, 0.25, 1);
 }
 
@@ -172,7 +284,7 @@
   position: absolute;
   width: 2px;
   height: 0;
-  background-color: #44d8a4; /* Soft teal */
+  background-color: #ed3922;
   transition: all 0.3s cubic-bezier(0.35, 0.1, 0.25, 1);
 }
 
@@ -214,7 +326,7 @@
 .game-run__buttons button p:after {
   content: attr(data-text);
   top: 150%;
-  color: #44d8a4; /* Soft teal */
+  color: #d84444;
 }
 
 .game-run__buttons button:hover:before,
@@ -242,7 +354,7 @@
 }
 
 .game-run__buttons button.start {
-  background-color: #44d8a4; /* Soft teal */
+  background-color: #d7441f; 
   box-shadow: 0px 5px 10px -10px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
 }
@@ -280,9 +392,7 @@
   outline: 0;
 }
 
-.game-run__scoreboard{
-  background-color: aliceblue;
-}
+
 @keyframes start {
   from {
     top: -50%;

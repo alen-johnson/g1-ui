@@ -132,7 +132,12 @@ const GameRun = () => {
     return item;
   };
 
-  if (!playerSet) return <div>Loading...</div>;
+  if (!playerSet)
+    return (
+      <div className="game-run__loader">
+        <div>Loading</div>
+      </div>
+    );
 
   const entries = Object.entries(playerSet);
 
@@ -216,14 +221,52 @@ const GameRun = () => {
 
   return (
     <div className="game-run">
+      <div className="game-run__side">
+        <button className="game-run__menu-btn" onClick={handleXClick}>
+          <span className="game-run__menu-icon">
+            <svg viewBox="0 0 175 80" width="40" height="40">
+              <rect width="80" height="15" fill="#f0f0f0" rx="10"></rect>
+              <rect y="30" width="80" height="15" fill="#f0f0f0" rx="10"></rect>
+              <rect y="60" width="80" height="15" fill="#f0f0f0" rx="10"></rect>
+            </svg>
+          </span>
+          <span className="game-run__menu-text">MENU</span>
+        </button>
+        <div className="game-run__scoreboard">
+          <button onClick={showScoreboard}>
+            <span class="label">Scoreboard</span>
+            <span class="icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+              >
+                <path fill="none" d="M0 0h24v24H0z"></path>
+                <path
+                  fill="currentColor"
+                  d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                ></path>
+              </svg>
+            </span>
+          </button>
+          <Drawer
+            title="Scoreboard"
+            onClose={showScoreboard}
+            open={open}
+            placement="left"
+          >
+            <ScoreboardDrawer {...scores} />
+          </Drawer>
+        </div>
+      </div>
       <div className={`game-run__display-area ${flipped ? "flipped" : ""}`}>
         <div className="front">
-          <CloseCircleOutlined
-            style={{ color: "black", fontSize: 20 }}
-            onClick={handleXClick}
-          />
-          <div class="game-run__buttons">
-            <button class="game-run__buttons-btn" onClick={handleResetClick}>
+          <div className="game-run__buttons">
+            <button
+              className="game-run__buttons-btn"
+              onClick={handleResetClick}
+            >
               <span></span>
               <p
                 data-start="good luck!"
@@ -290,13 +333,6 @@ const GameRun = () => {
           </Select>
           <Button onClick={handleOKClick}>OK</Button>
         </div>
-      </div>
-
-      <div className="game-run__scoreboard">
-        <Button onClick={showScoreboard}>Scoreboard</Button>
-        <Drawer title="Scoreboard" onClose={showScoreboard} open={open}>
-          <ScoreboardDrawer {...scores} />
-        </Drawer>
       </div>
     </div>
   );
