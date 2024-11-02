@@ -26,14 +26,14 @@
   font-weight: 600;
   display: flex;
   align-items: center;
-  background: #00bcd4; /* Cyan */
-  color: #e0e0e0; /* Light gray text */
+  background: #1b59c4; /* Blue */
+  color: #d3d3d3; /* Light gray text */
 }
 
 .game-run__menu-btn:hover {
-  background-color: #0097a7; /* Darker cyan */
+  background-color: #144799; /* Darker blue */
   color: #ffffff; /* Bright white text */
-  box-shadow: 0 0 20px #1de9b6; /* Teal glow */
+  box-shadow: 0 0 15px #1e88e5; /* Soft blue glow */
 }
 
 .game-run__menu-btn .game-run__menu-icon {
@@ -77,8 +77,8 @@
   height: 3em;
   padding: 0 3em;
   border: none;
-  background-color: #1b1bc4;
-  color: #e0e0e0; /* Light gray text */
+  background-color: #1b59c4; /* Same blue as menu button */
+  color: #d3d3d3; /* Light gray text */
   text-transform: uppercase;
   overflow: hidden;
   border-radius: 5px;
@@ -93,7 +93,7 @@
   left: 0;
   height: 0px;
   width: 100%;
-  background: linear-gradient(90deg, #1b59c4 20%, #07287c 100%);
+  background: linear-gradient(90deg, #1e88e5 20%, #144799 100%); /* Gradient from blue to dark blue */
   transition: 0.2s;
 }
 
@@ -122,6 +122,7 @@
   top: 0;
   opacity: 1;
 }
+
 
 .game-run__display-area {
   perspective: 1000px;
