@@ -68,7 +68,7 @@
 }
 
 .game-run__scoreboard {
-  padding: 10px;
+  padding: 5px 0 0 0;
 }
 
 .game-run__scoreboard button {
@@ -127,13 +127,10 @@
 .game-run__display-area {
   perspective: 1000px;
   display: flex;
-  flex-direction: column;
-  flex: 1;
   width: 100%;
   max-width: 1200px;
   box-sizing: border-box;
   align-items: center;
-  justify-content: center;
   border-radius: 15px;
 }
 
@@ -173,15 +170,6 @@
   border-radius: 15px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
   background-color: rgba(255, 255, 255, 0.1);
-}
-
-.game-run__box div {
-  display: flex;
-  box-sizing: border-box;
-  padding: 20px;
-  align-items: center;
-  justify-content: center;
-  animation: pulse 2s infinite;
 }
 
 .game-run__box p {

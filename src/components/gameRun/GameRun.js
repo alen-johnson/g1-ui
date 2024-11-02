@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./GameRun.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Drawer, Modal, Select, Tag } from "antd";
-import { CloseCircleOutlined, StepForwardOutlined } from "@ant-design/icons";
-import { ScoreboardDrawer } from "../componentsIndex";
+import { Button, Drawer, Modal, Select } from "antd";
+import { StepForwardOutlined } from "@ant-design/icons";
+import { ResultModal, ScoreboardDrawer } from "../componentsIndex";
 
 const GameRun = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -14,6 +14,9 @@ const GameRun = () => {
   const [flipped, setFlipped] = useState(false);
   const [items, setItems] = useState([]);
   const [selectedPlayers, setSelectedPlayers] = useState([]);
+
+  const [openScore, setOpenScore] = useState(false);
+  const [openSession, setOpenSession] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,7 +39,6 @@ const GameRun = () => {
   }, {});
 
   const [scores, setScores] = useState(initialScores);
-  const [open, setOpen] = useState(false);
   // Fetching content based on category
   useEffect(() => {
     const fetchContent = async () => {
@@ -216,7 +218,11 @@ const GameRun = () => {
   };
 
   const showScoreboard = () => {
-    setOpen(!open);
+    setOpenScore(!openScore);
+  };
+
+  const endSession = () => {
+    setOpenSession(!openSession);
   };
 
   return (
@@ -232,6 +238,19 @@ const GameRun = () => {
           </span>
           <span className="game-run__menu-text">MENU</span>
         </button>
+        <Modal
+            title="Exit to main menu?"
+            visible={exitModal}
+            onOk={() => navigate("/")}
+            onCancel={() => setExitModal(false)}
+            okText="Yes"
+            cancelText="No"
+            cancelButtonProps={{ className: "" }}
+            okButtonProps={{ className: "" }}
+            mask={true} // Enables the mask background
+            maskClosable={false} // Prevents closing modal on mask click
+            maskStyle={{ backgroundColor: "rgba(0, 0, 0, .7)" }}
+          />
         <div className="game-run__scoreboard">
           <button onClick={showScoreboard}>
             <span class="label">Scoreboard</span>
@@ -253,12 +272,51 @@ const GameRun = () => {
           <Drawer
             title="Scoreboard"
             onClose={showScoreboard}
-            open={open}
+            open={openScore}
             placement="left"
           >
             <ScoreboardDrawer {...scores} />
           </Drawer>
         </div>
+        <div className="game-run__scoreboard">
+        <button onClick={endSession}>
+            <span class="label">End Session</span>
+            <span class="icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+              >
+                <path fill="none" d="M0 0h24v24H0z"></path>
+                <path
+                  fill="currentColor"
+                  d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                ></path>
+              </svg>
+            </span>
+          </button>
+          </div>
+        <Modal
+          title="END GAME"
+          centered
+          open={openSession}
+          okText="End Game"
+          onOk={() => {
+            setTimeout(() => {
+              navigate("/")
+            }, 1000);
+            }}
+          cancelText="Continue Playing"
+          onCancel={endSession}
+          mask={true} // Enables the mask background
+          maskClosable={false} // Prevents closing modal on mask click
+          maskStyle={{ backgroundColor: "rgba(0, 0, 0, 1)" }}
+          width={800}
+          bodyStyle={{ height: 300, overflowY: 'auto' }} 
+        >
+          <ResultModal {...scores}/>
+        </Modal>
       </div>
       <div className={`game-run__display-area ${flipped ? "flipped" : ""}`}>
         <div className="front">
@@ -275,16 +333,6 @@ const GameRun = () => {
               ></p>
             </button>
           </div>
-          <Modal
-            title="Exit to main menu?"
-            visible={exitModal}
-            onOk={() => navigate("/")}
-            onCancel={() => setExitModal(false)}
-            okText="Yes"
-            cancelText="No"
-            cancelButtonProps={{ className: "" }}
-            okButtonProps={{ className: "" }}
-          />
           <div className="game-run__box">
             {isVisible && (
               <div>
