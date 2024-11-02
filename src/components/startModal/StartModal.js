@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import "./StartModal.css";
 import React, { useState } from "react";
-import { Button, Input, Select, Space, Spin } from "antd";
+import { Button, Input, Select, Space, Spin, Form } from "antd";
 import { CloseCircleOutlined, SyncOutlined } from "@ant-design/icons";
 
-const StartModal = ({ isOpen, closeModal }) => {
+const StartModal = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [numberInput, setNumberInput] = useState(0);
   const [playerNames, setPlayerNames] = useState([]);
   const [category, setCategory] = useState("All");
 
-  const handleplay = () => {
+  const handlePlay = () => {
     setLoading(true);
     setTimeout(() => {
       navigate("/gamerun", {
@@ -21,7 +21,6 @@ const StartModal = ({ isOpen, closeModal }) => {
           category: category,
         },
       }); // passing no. of players to gameRun
-      closeModal();
     }, 2000);
   };
 
@@ -56,64 +55,62 @@ const StartModal = ({ isOpen, closeModal }) => {
   ];
 
   return (
-    <div>
-      {isOpen && (
-        <div className="modal-overlay">
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-close_btn">
-              <CloseCircleOutlined onClick={closeModal} />
-            </div>
-            <Space>
-              <p>Select Number of players</p>
-              <Select
-                allowClear
-                style={{ width: "100%" }}
-                onChange={handleNumberChange}
-              >
-                <Select.Option value="4">4</Select.Option>
-                <Select.Option value="5">5</Select.Option>
-                <Select.Option value="6">6</Select.Option>
-              </Select>
-            </Space>
+    <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
+      <Form layout="vertical">
+        <Form.Item label="Select Number of Players">
+          <Select
+            allowClear
+            placeholder="Choose number of players"
+            onChange={handleNumberChange}
+            style={{ width: "100%" }}
+          >
+            {[4, 5, 6].map((num) => (
+              <Select.Option key={num} value={num}>
+                {num}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
 
-            <div>
-              {Array.from({ length: numberInput }, (_, index) => (
-                <div key={index} style={{ marginBottom: "10px" }}>
-                  <Input
-                    allowClear
-                    placeholder={`Player ${index + 1} Name`}
-                    value={playerNames[index]}
-                    onChange={(event) => handlePlayerNameChange(index, event)}
-                  />
-                </div>
-              ))}
-            </div>
-            {/* <Space> */}
-            <p>Select Category</p>
-            <Select
-              // mode="multiple"
-              // maxTagCount={5}
-              allowClear
-              placeholder="Category"
-              style={{ width: "100%" }}
-              onChange={(value) => handleCategoryChange(value)}
-              // disabled
-            >
-              {categories.map((category, key) => {
-                return (
-                  <Select.Option key={key} value={category}>
-                    {category}
-                  </Select.Option>
-                );
-              })}
-            </Select>
-            {/* </Space> */}
+        <Form.Item label="Player Names">
+          <Space direction="vertical" style={{ width: "100%" }}>
+            {Array.from({ length: numberInput }, (_, index) => (
+              <Input
+                key={index}
+                allowClear
+                placeholder={`Player ${index + 1} Name`}
+                value={playerNames[index]}
+                onChange={(event) => handlePlayerNameChange(index, event)}
+              />
+            ))}
+          </Space>
+        </Form.Item>
+
+        <Form.Item label="Select Category">
+          <Select
+            allowClear
+            placeholder="Choose a category"
+            onChange={handleCategoryChange}
+            style={{ width: "100%" }}
+          >
+            {categories.map((category, index) => (
+              <Select.Option key={index} value={category}>
+                {category}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+
+        <Form.Item>
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <Spin spinning={loading}>
-              <Button onClick={handleplay}>Start</Button>
+              <Button type="primary" onClick={handlePlay} style={{ width: "120px" }}>
+                Start
+              </Button>
             </Spin>
           </div>
-        </div>
-      )}
+        </Form.Item>
+      </Form>
     </div>
   );
 };
