@@ -6,7 +6,7 @@ function ScoreboardDrawer(scores ) {
     const sortedScores = Object.entries(scores)
     .sort(([, scoreA], [, scoreB]) => Number(scoreB) - Number(scoreA));
   return (
-    <div>
+    <div className='scoreboard'>
         <ol>
         {sortedScores.map(([player, score]) => (
           <li key={player}>{player} : {score}</li>

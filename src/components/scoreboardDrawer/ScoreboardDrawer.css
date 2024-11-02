@@ -1,0 +1,7 @@
+.scoreboard{
+ display: block;
+}
+.scoreboard li{
+    font-size: large;
+
+}
