@@ -2,7 +2,7 @@ import { Button } from 'antd'
 import React, { useState } from 'react'
 import { CreateModal, JoinModal} from "../../components/componentsIndex"
 
-function CreateGame() {
+function CreateGamePage() {
   const [isCreateOpen, setIsCreateOpen] = useState(false)
   const [isJoinOpen, setIsJoinOpen] = useState(false)
 
@@ -28,4 +28,4 @@ function CreateGame() {
   )
 }
 
-export default CreateGame
+export default CreateGamePage

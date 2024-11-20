@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Home.css";
+import "./HomePage.css";
 
-function Home() {
+function HomePage() {
   const navigate = useNavigate();
 
   const handleStartCLick = () => {
@@ -28,4 +28,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;

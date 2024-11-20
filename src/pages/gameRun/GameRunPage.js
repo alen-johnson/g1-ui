@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "./GameRun.css";
+import "./GameRunPage.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Drawer, Modal, Select } from "antd";
 import { StepForwardOutlined } from "@ant-design/icons";
-import { ResultModal, ScoreboardDrawer } from "../componentsIndex";
+import { ResultModal, ScoreboardDrawer } from "../../components/componentsIndex";
 
-const GameRun = () => {
+const GameRunPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [playerSet, setPlayerSet] = useState(null);
   const [isVisible, setIsVisible] = useState(true);
@@ -386,4 +386,4 @@ const GameRun = () => {
   );
 };
 
-export default GameRun;
+export default GameRunPage;

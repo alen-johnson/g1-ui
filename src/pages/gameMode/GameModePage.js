@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { StartModal } from "../../components/componentsIndex";
-import "./GameMode.css";
+import "./GameModePage.css";
 
 import React, { useState } from "react";
 import { Modal } from "antd";
 
-function GameMode() {
+function GameModePage() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -43,4 +43,4 @@ function GameMode() {
   );
 }
 
-export default GameMode;
+export default GameModePage;
