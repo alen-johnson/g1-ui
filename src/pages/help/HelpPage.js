@@ -1,6 +1,6 @@
 import React from "react";
-import "./help.css"
-function Help() {
+import "./HelpPage.css"
+function HelpPage() {
   return (
     <div>
       <div className="card">
@@ -20,4 +20,4 @@ function Help() {
   );
 }
 
-export default Help;
+export default HelpPage;

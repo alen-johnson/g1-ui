@@ -1,7 +1,7 @@
 import { Switch } from 'antd'
 import React from 'react'
 
-function Settings() {
+function SettingsPage() {
   return (
     <div className='settings'>
         <Switch
@@ -11,4 +11,4 @@ function Settings() {
   )
 }
 
-export default Settings
+export default SettingsPage

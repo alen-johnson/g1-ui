@@ -1,19 +1,25 @@
 import "./App.css";
-import { CreateGame, GameMode, Help, Home, Settings } from "./pages/pagesIndex";
+import {
+  CreateGamePage,
+  GameModePage,
+  GameRunPage,
+  HelpPage,
+  HomePage,
+  SettingsPage,
+} from "./pages/pagesIndex";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { GameRun } from "./components/componentsIndex";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/gamerun" element={<GameRun />} />
-          <Route path="/gamemode" element={<GameMode />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/help" element={<Help />} />
-          <Route path="/createGame" element={<CreateGame />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/gamerun" element={<GameRunPage />} />
+          <Route path="/gamemode" element={<GameModePage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/help" element={<HelpPage />} />
+          <Route path="/createGame" element={<CreateGamePage />} />
         </Routes>
       </BrowserRouter>
     </div>
