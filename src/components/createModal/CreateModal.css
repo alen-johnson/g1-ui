@@ -21,3 +21,24 @@
     flex-direction: column;
 
 }
+
+.modal-button{
+    display: flex;
+    justify-content: center;
+}
+
+.modal-div{
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-evenly;
+}
+
+.modal-div_left{
+
+}
+
+.modal-div_right{
+    height: 10rem;
+    align-self: center;
+}

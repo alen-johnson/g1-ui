@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Drawer, Modal, Select } from "antd";
 import { StepForwardOutlined } from "@ant-design/icons";
 import { ResultModal, ScoreboardDrawer } from "../../components/componentsIndex";
-import { fetchContent, getApiUrl, makeImposter } from "../../helpers/helperIndex";
+import { fetchContent, makeImposter } from "../../helpers/helperIndex";
 
 const GameRunPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

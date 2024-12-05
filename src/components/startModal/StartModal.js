@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import "./StartModal.css";
 import React, { useState } from "react";
 import { Button, Input, Select, Space, Spin, Form } from "antd";
-import { CloseCircleOutlined, SyncOutlined } from "@ant-design/icons";
 
 const StartModal = () => {
   const navigate = useNavigate();
