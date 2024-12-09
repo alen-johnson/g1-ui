@@ -34,7 +34,7 @@ function GameModePage() {
         </Modal>
 
         <p
-        // onClick={handleMutliClick}
+        onClick={handleMutliClick}
         >
           Multi System Mode
         </p>
