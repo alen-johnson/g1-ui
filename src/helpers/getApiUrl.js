@@ -1,22 +1,27 @@
+const BASE_URL = process.env.REACT_APP_BASE_URL
+console.log(BASE_URL)
+
 export function getApiUrl(category) {
     switch (category) {
         case "Sports & Athletes":
-          return "http://localhost:5000/api/sports";
+          return `${BASE_URL}/api/sports`;
         case "Fiction":
-          return "http://localhost:5000/api/fictions";
+          return `${BASE_URL}/api/fictions`;
         case "Celebrities":
-          return "http://localhost:5000/api/celebrities";
+          return `${BASE_URL}/api/celebrities`;
         case "World Leaders":
-          return "http://localhost:5000/api/leaders";
+          return `${BASE_URL}/api/leaders`;
         case "Household":
-          return "http://localhost:5000/api/Households";
+          return `${BASE_URL}/api/households`;
+        case "Names":
+          return `${BASE_URL}/api/names`;
         default:
           return [
-            "http://localhost:5000/api/sports",
-            "http://localhost:5000/api/fictions",
-            "http://localhost:5000/api/celebrities",
-            "http://localhost:5000/api/leaders",
-            "http://localhost:5000/api/Households",
+            `${BASE_URL}/api/sports`,
+            `${BASE_URL}/api/fictions`,
+            `${BASE_URL}/api/celebrities`,
+            `${BASE_URL}/api/leaders`,
+            `${BASE_URL}/api/households`,
           ];
       }
 }
