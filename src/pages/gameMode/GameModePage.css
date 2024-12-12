@@ -24,7 +24,7 @@
 
 .game-mode__display-area p {
     cursor: pointer;
-    color: #d4af37 ;
+    color: #3ad437 ;
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.4);
@@ -42,7 +42,5 @@
 
 .game-mode__display-area p:hover {
     background-color: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.8);
-  color: #eb9500;
-  transform: translateY(-5px);
+
 }
