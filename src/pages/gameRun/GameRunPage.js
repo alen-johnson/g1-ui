@@ -51,7 +51,7 @@ const GameRunPage = () => {
       const initialPlayerSet = makeImposter([...items], players);
       setPlayerSet(initialPlayerSet);
     }
-  }, [items, players]);
+  }, [items]);
 
   if (!playerSet)
     return (
@@ -232,7 +232,7 @@ const GameRunPage = () => {
           maskClosable={false} // Prevents closing modal on mask click
           maskStyle={{ backgroundColor: "rgba(0, 0, 0, 1)" }}
           width={800}
-          bodyStyle={{ height: 300, overflowY: 'auto' }} 
+          styles={{ height: 300, overflowY: 'auto' }} 
         >
           <ResultModal {...scores}/>
         </Modal>
