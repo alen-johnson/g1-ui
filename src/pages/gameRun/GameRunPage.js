@@ -51,7 +51,7 @@ const GameRunPage = () => {
       const initialPlayerSet = makeImposter([...items], players);
       setPlayerSet(initialPlayerSet);
     }
-  }, [items]);
+  }, [items, players]);
 
   if (!playerSet)
     return (

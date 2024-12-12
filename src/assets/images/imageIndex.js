@@ -1,12 +1,8 @@
-import background from './background.png';
-import question_mark from './question.png';
-import mag1 from './magnifier.png';
-import mag2 from './search.png';
+export { default as background } from "./back.webp";
+export { default as infoIcon } from "./info.png";
+export { default as settingIcon } from "./engineer.png";
+export { default as startIcon } from "./giphy.webp";
+export { default as impo } from "./impo.png";
+export { default as searchIcon } from "./search.png";
 
 
-export { 
-    background, 
-    question_mark,
-    mag1,
-    mag2
-};

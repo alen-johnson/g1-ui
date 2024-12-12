@@ -1,11 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
+import {
+  settingIcon,
+  infoIcon,
+  startIcon,
+  impo,
+  searchIcon,
+} from "../../assets/images/imageIndex";
 
 function HomePage() {
   const navigate = useNavigate();
 
-  const handleStartCLick = () => {
+  const handleStartClick = () => {
     navigate("/gamemode");
   };
 
@@ -16,13 +23,82 @@ function HomePage() {
   const handleHelpClick = () => {
     navigate("/help");
   };
+  const spawnElsewhere = (event) => {
+    const icon = event.target;
+
+    const randomX = Math.floor(Math.random() * window.innerWidth);
+    const randomY = Math.floor(Math.random() * window.innerHeight);
+
+    icon.style.position = "absolute";
+    icon.style.left = `${randomX}px`;
+    icon.style.top = `${randomY}px`;
+
+    icon.style.animation = "none";
+    void icon.offsetHeight;
+    icon.style.animation = "moveAround1 30s linear infinite";
+  };
+
+  document
+    .querySelectorAll(
+      ".home__display-area_movingIcon1, .home__display-area_movingIcon2, .home__display-area_movingIcon3, .home__display-area_movingIcon4"
+    )
+    .forEach((icon) => {
+      icon.addEventListener("click", spawnElsewhere);
+    });
 
   return (
     <div className="home">
+      <img
+        src={searchIcon}
+        alt="Search Icon"
+        onClick={spawnElsewhere}
+        className="home__display-area_movingIcon1"
+      />
+
       <div className="home__display-area">
-        <p onClick={handleStartCLick}>Start Game</p>
-        <p onClick={handleSettingClick}>Settings</p>
-        <p onClick={handleHelpClick}>Help</p>
+        <img
+          src={settingIcon}
+          alt="Settings"
+          onClick={handleSettingClick}
+          className="home__display-area_settingIcon"
+        />
+        <span className="hover-text-setting">Settings</span>
+        <div className="home__display-area_center">
+          <img src={impo} alt="Imposter " className="home__display-area_impo" />
+          <img
+            src={searchIcon}
+            alt="Search Icon"
+            onClick={spawnElsewhere}
+            className="home__display-area_movingIcon2"
+          />
+
+          <img
+            src={startIcon}
+            alt="Start Game"
+            onClick={handleStartClick}
+            className="home__display-area_startIcon"
+          />
+        </div>
+        <img
+          src={searchIcon}
+          alt="Search Icon"
+          onClick={spawnElsewhere}
+          className="home__display-area_movingIcon3"
+        />
+
+        <img
+          src={infoIcon}
+          alt="About"
+          onClick={handleHelpClick}
+          className="home__display-area_aboutIcon"
+        />
+        <span className="hover-text-about">About</span>
+        <img
+          src={searchIcon}
+          alt="Search Icon"
+          onClick={spawnElsewhere}
+          className="home__display-area_movingIcon4"
+        />
       </div>
     </div>
   );

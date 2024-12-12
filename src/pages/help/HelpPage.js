@@ -16,6 +16,14 @@ function HelpPage() {
           </div>
         </div>
       </div>
+
+      <div>
+      Song: Fashion
+Composer: Alex Productions
+Website: https://www.youtube.com/channel/UCx0_M61F81Nfb-BRXE-SeVA
+License: Free To Use YouTube license youtube-free
+Music powered by BreakingCopyright: https://breakingcopyright.com
+      </div>
     </div>
   );
 }
