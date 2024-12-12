@@ -1,0 +1,108 @@
+.game-run__menu-btn {
+    width: 208px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    transition: all 0.5s ease-in-out;
+    font-size: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    background: #1b59c4; /* Blue */
+    color: #d3d3d3; /* Light gray text */
+  }
+  
+  .game-run__menu-btn:hover {
+    background-color: #144799; /* Darker blue */
+    color: #ffffff; /* Bright white text */
+    box-shadow: 0 0 15px #1e88e5; /* Soft blue glow */
+  }
+  
+  .game-run__menu-btn .game-run__menu-icon {
+    position: absolute;
+    height: 40px;
+    width: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s;
+  }
+  
+  .game-run__menu-btn .game-run__menu-text {
+    transform: translateX(55px);
+  }
+  
+  .game-run__menu-btn:hover .game-run__menu-icon {
+    width: 225px;
+  }
+  
+  .game-run__menu-btn:hover .game-run__menu-text {
+    transition: all 0.5s;
+    opacity: 0;
+  }
+  
+  .game-run__menu-btn:focus {
+    outline: none;
+  }
+  
+  .game-run__menu-btn:active .game-run__menu-icon {
+    transform: scale(0.85);
+  }
+  
+  .game-run__scoreboard {
+    padding: 5px 0 0 0;
+  }
+  
+  .game-run__scoreboard button {
+    position: relative;
+    font-size: 16px;
+    height: 3em;
+    padding: 0 3em;
+    border: none;
+    background-color: #1b59c4; /* Same blue as menu button */
+    color: #d3d3d3; /* Light gray text */
+    text-transform: uppercase;
+    overflow: hidden;
+    border-radius: 5px;
+  }
+  
+  .game-run__scoreboard button::before {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 0;
+    bottom: 0;
+    left: 0;
+    height: 0px;
+    width: 100%;
+    background: linear-gradient(90deg, #1e88e5 20%, #144799 100%); /* Gradient from blue to dark blue */
+    transition: 0.2s;
+  }
+  
+  .game-run__scoreboard button .label {
+    position: relative;
+  }
+  
+  .game-run__scoreboard button .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3em;
+    width: 3em;
+    position: absolute;
+    top: 3em;
+    right: 0;
+    opacity: 0;
+    transition: 0.4s;
+  }
+  
+  .game-run__scoreboard button:hover::before {
+    height: 100%;
+  }
+  
+  .game-run__scoreboard button:hover .icon {
+    top: 0;
+    opacity: 1;
+  }
+  
