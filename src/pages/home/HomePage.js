@@ -32,10 +32,12 @@ function HomePage() {
     icon.style.position = "absolute";
     icon.style.left = `${randomX}px`;
     icon.style.top = `${randomY}px`;
+    const animations = ["moveAround1", "moveAround2", "moveAround3", "moveAround4"]
+    const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
 
     icon.style.animation = "none";
     void icon.offsetHeight;
-    icon.style.animation = "moveAround1 30s linear infinite";
+    icon.style.animation = `${randomAnimation} 30s linear infinite`;
   };
 
   document

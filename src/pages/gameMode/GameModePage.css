@@ -29,7 +29,6 @@
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.4);
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     font-size: 1.8rem;
     letter-spacing: 2px;
     margin: 20px 0;
@@ -41,6 +40,8 @@
 }
 
 .game-mode__display-area p:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+
+    box-shadow: 0 4px 15px #6ce023;
+
 
 }
