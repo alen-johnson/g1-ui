@@ -3,8 +3,15 @@ import "./GameRunPage.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Drawer, Modal, Select } from "antd";
 import { StepForwardOutlined } from "@ant-design/icons";
-import { ResultModal, ScoreboardDrawer } from "../../components/componentsIndex";
-import { fetchContent, makeImposter } from "../../helpers/helperIndex";
+import {
+  ResultModal,
+  ScoreboardDrawer,
+} from "../../components/componentsIndex";
+import {
+  calcScore,
+  fetchContent,
+  makeImposter,
+} from "../../helpers/helperIndex";
 
 const GameRunPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -109,30 +116,7 @@ const GameRunPage = () => {
     setIsVisible(true);
 
     setScores((prevScores) => {
-      const newScores = { ...prevScores };
-
-      if (selectedPlayers.length > 1) {
-        selectedPlayers.forEach((winner) => {
-          newScores[winner] += 2;
-        });
-
-        for (const player in newScores) {
-          if (!selectedPlayers.includes(player)) {
-            newScores[player] -= 1;
-          }
-        }
-      } else {
-        selectedPlayers.forEach((winner) => {
-          newScores[winner] += 3;
-        });
-
-        for (const player in newScores) {
-          if (!selectedPlayers.includes(player)) {
-            newScores[player] -= 2;
-          }
-        }
-      }
-      return newScores;
+      return calcScore(prevScores, selectedPlayers);
     });
   };
 
@@ -158,18 +142,18 @@ const GameRunPage = () => {
           <span className="game-run__menu-text">MENU</span>
         </button>
         <Modal
-            title="Exit to main menu?"
-            visible={exitModal}
-            onOk={() => navigate("/")}
-            onCancel={() => setExitModal(false)}
-            okText="Yes"
-            cancelText="No"
-            cancelButtonProps={{ className: "" }}
-            okButtonProps={{ className: "" }}
-            mask={true} // Enables the mask background
-            maskClosable={false} // Prevents closing modal on mask click
-            maskStyle={{ backgroundColor: "rgba(0, 0, 0, .7)" }}
-          />
+          title="Exit to main menu?"
+          visible={exitModal}
+          onOk={() => navigate("/")}
+          onCancel={() => setExitModal(false)}
+          okText="Yes"
+          cancelText="No"
+          cancelButtonProps={{ className: "" }}
+          okButtonProps={{ className: "" }}
+          mask={true} // Enables the mask background
+          maskClosable={false} // Prevents closing modal on mask click
+          maskStyle={{ backgroundColor: "rgba(0, 0, 0, .7)" }}
+        />
         <div className="game-run__scoreboard">
           <button onClick={showScoreboard}>
             <span class="label">Scoreboard</span>
@@ -198,7 +182,7 @@ const GameRunPage = () => {
           </Drawer>
         </div>
         <div className="game-run__scoreboard">
-        <button onClick={endSession}>
+          <button onClick={endSession}>
             <span class="label">End Session</span>
             <span class="icon">
               <svg
@@ -215,7 +199,7 @@ const GameRunPage = () => {
               </svg>
             </span>
           </button>
-          </div>
+        </div>
         <Modal
           title="END GAME"
           centered
@@ -223,18 +207,18 @@ const GameRunPage = () => {
           okText="End Game"
           onOk={() => {
             setTimeout(() => {
-              navigate("/")
+              navigate("/");
             }, 1000);
-            }}
+          }}
           cancelText="Continue Playing"
           onCancel={endSession}
           mask={true} // Enables the mask background
           maskClosable={false} // Prevents closing modal on mask click
           maskStyle={{ backgroundColor: "rgba(0, 0, 0, 1)" }}
           width={800}
-          styles={{ height: 300, overflowY: 'auto' }} 
+          styles={{ height: 300, overflowY: "auto" }}
         >
-          <ResultModal {...scores}/>
+          <ResultModal {...scores} />
         </Modal>
       </div>
       <div className={`game-run__display-area ${flipped ? "flipped" : ""}`}>
