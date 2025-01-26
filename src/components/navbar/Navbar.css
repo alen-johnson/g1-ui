@@ -1,108 +1,132 @@
-.game-run__menu-btn {
-    width: 208px;
-    height: 40px;
-    border-radius: 5px;
-    border: none;
-    transition: all 0.5s ease-in-out;
-    font-size: 20px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    background: #1b59c4; /* Blue */
-    color: #d3d3d3; /* Light gray text */
-  }
-  
-  .game-run__menu-btn:hover {
-    background-color: #144799; /* Darker blue */
-    color: #ffffff; /* Bright white text */
-    box-shadow: 0 0 15px #1e88e5; /* Soft blue glow */
-  }
-  
-  .game-run__menu-btn .game-run__menu-icon {
-    position: absolute;
-    height: 40px;
-    width: 90px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.5s;
-  }
-  
-  .game-run__menu-btn .game-run__menu-text {
-    transform: translateX(55px);
-  }
-  
-  .game-run__menu-btn:hover .game-run__menu-icon {
-    width: 225px;
-  }
-  
-  .game-run__menu-btn:hover .game-run__menu-text {
-    transition: all 0.5s;
-    opacity: 0;
-  }
-  
-  .game-run__menu-btn:focus {
-    outline: none;
-  }
-  
-  .game-run__menu-btn:active .game-run__menu-icon {
-    transform: scale(0.85);
-  }
-  
-  .game-run__scoreboard {
-    padding: 5px 0 0 0;
-  }
-  
-  .game-run__scoreboard button {
-    position: relative;
-    font-size: 16px;
-    height: 3em;
-    padding: 0 3em;
-    border: none;
-    background-color: #1b59c4; /* Same blue as menu button */
-    color: #d3d3d3; /* Light gray text */
-    text-transform: uppercase;
-    overflow: hidden;
-    border-radius: 5px;
-  }
-  
-  .game-run__scoreboard button::before {
-    content: '';
-    display: block;
-    position: absolute;
-    z-index: 0;
-    bottom: 0;
-    left: 0;
-    height: 0px;
-    width: 100%;
-    background: linear-gradient(90deg, #1e88e5 20%, #144799 100%); /* Gradient from blue to dark blue */
-    transition: 0.2s;
-  }
-  
-  .game-run__scoreboard button .label {
-    position: relative;
-  }
-  
-  .game-run__scoreboard button .icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 3em;
-    width: 3em;
-    position: absolute;
-    top: 3em;
-    right: 0;
-    opacity: 0;
-    transition: 0.4s;
-  }
-  
-  .game-run__scoreboard button:hover::before {
-    height: 100%;
-  }
-  
-  .game-run__scoreboard button:hover .icon {
-    top: 0;
-    opacity: 1;
-  }
-  
+.navbar__menu {
+  position: relative;
+}
+
+.navbar__menu-button {
+  cursor: pointer;
+  position: absolute;
+  top: 90px;
+  z-index: 2;
+  background-color: #ffdd00;
+  border: 2px solid #1e1e1e;
+  color: #1e1e1e;
+  font-size: 30px;
+  font-weight: 700;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0px 3px 10px 0px rgba(16, 16, 16, 0.5);
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.navbar__menu-checkbox {
+  width: 60px;
+  height: 60px;
+  opacity: 0;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.navbar__menu-option {
+  position: absolute;
+  background-color: #1e1e1e;
+  border: 2px solid #ffdd00;
+  color: #ffdd00;
+  z-index: -1;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s;
+  box-shadow: 3px 3px 10px 0px rgba(16, 16, 16, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.navbar__menu-option:hover .tooltip {
+  opacity: 1; 
+  transform: translateY(-10px); 
+}
+
+.tooltip {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-10%);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  width:80px ;
+  opacity: 0;
+  transition: all 0.4s;
+  pointer-events: none; 
+}
+
+
+.navbar__option-a .tooltip {
+  content: "Home";
+}
+
+.navbar__option-b .tooltip {
+  content: "Scoreboard";
+}
+
+.navbar__option-c .tooltip {
+  content: "End Game";
+}
+
+
+.navbar__menu-checkbox:hover ~ .navbar__menu-button,
+.navbar__menu-checkbox:checked ~ .navbar__menu-button {
+  background-color: #eccd00;
+  scale: 0.98;
+  box-shadow: none;
+}
+
+.navbar__menu-checkbox:not(:checked) ~ .navbar__menu-button::before {
+  content: "+";
+}
+
+.navbar__menu-checkbox:checked ~ .navbar__menu-button::after {
+  content: "-";
+  scale: 0.98;
+  box-shadow: none;
+}
+
+.navbar__menu-checkbox:not(:checked) ~ .navbar__menu-option {
+  box-shadow: none;
+}
+
+.navbar__menu-option:hover,
+.navbar__menu-option:active,
+.navbar__menu-option:focus {
+  box-shadow: 0 4px 15px #ceeb0e;
+
+}
+
+.navbar__menu-checkbox:checked ~ .navbar__option-a {
+  transition-delay: 0.1s;
+  transform: translateY(-70px) translateX(35px);
+}
+
+.navbar__menu-checkbox:checked ~ .navbar__option-b {
+  transition-delay: 0.2s;
+  transform: translateY(-30px) translateX(100px);
+}
+
+.navbar__menu-checkbox:checked ~ .navbar__option-c {
+  transition-delay: 0.3s;
+  transform: translateY(5px) translateX(35px);
+}
+
+.navbar__menu-option.active {
+  z-index: 1;
+}
