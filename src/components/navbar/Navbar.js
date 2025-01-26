@@ -1,7 +1,10 @@
 import "./Navbar.css";
 import { Drawer, Modal } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { ResultModal, ScoreboardDrawer } from "../componentsIndex";
+import SportsScoreIcon from "@mui/icons-material/SportsScore";
+import HomeIcon from "@mui/icons-material/Home";
+import PowerSettingsNewOutlinedIcon from "@mui/icons-material/PowerSettingsNewOutlined";
 
 const Navbar = ({
   scores,
@@ -24,18 +27,50 @@ const Navbar = ({
   const handleXClick = () => {
     setExitModal(true);
   };
+
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleToggle = () => {
+    setIsChecked((prevState) => !prevState);
+    console.log("clicked");
+  };
+
   return (
-    <div>
-      <button className="game-run__menu-btn" onClick={handleXClick}>
-        <span className="game-run__menu-icon">
-          <svg viewBox="0 0 175 80" width="40" height="40">
-            <rect width="80" height="15" fill="#f0f0f0" rx="10"></rect>
-            <rect y="30" width="80" height="15" fill="#f0f0f0" rx="10"></rect>
-            <rect y="60" width="80" height="15" fill="#f0f0f0" rx="10"></rect>
-          </svg>
-        </span>
-        <span className="game-run__menu-text">MENU</span>
-      </button>
+    <div className="navbar">
+      <div className="navbar__menu">
+  <input
+    className="navbar__menu-checkbox"
+    type="checkbox"
+    checked={isChecked}
+  />
+  <span
+    className={`navbar__menu-button ${isChecked ? "active" : ""}`}
+    onClick={handleToggle}
+  ></span>
+  <button
+    className={`navbar__menu-option navbar__option-a ${isChecked ? "active" : ""}`}
+    onClick={handleXClick}
+  >
+    <HomeIcon />
+    <span className="tooltip">Home</span>
+  </button>
+  <button
+    className={`navbar__menu-option navbar__option-b ${isChecked ? "active" : ""}`}
+    onClick={showScoreboard}
+  >
+    <SportsScoreIcon />
+    <span className="tooltip">Scoreboard</span> 
+  </button>
+  <button
+    className={`navbar__menu-option navbar__option-c ${isChecked ? "active" : ""}`}
+    onClick={endSession}
+  >
+    <PowerSettingsNewOutlinedIcon />
+    <span className="tooltip">End Session</span> 
+  </button>
+</div>
+
+
       <Modal
         title="Exit to main menu?"
         visible={exitModal}
@@ -45,56 +80,18 @@ const Navbar = ({
         cancelText="No"
         cancelButtonProps={{ className: "" }}
         okButtonProps={{ className: "" }}
-        mask={true} // Enables the mask background
-        maskClosable={false} // Prevents closing modal on mask click
+        mask={true}
+        maskClosable={false}
         maskStyle={{ backgroundColor: "rgba(0, 0, 0, .7)" }}
       />
-      <div className="game-run__scoreboard">
-        <button onClick={showScoreboard}>
-          <span class="label">Scoreboard</span>
-          <span class="icon">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width="24"
-              height="24"
-            >
-              <path fill="none" d="M0 0h24v24H0z"></path>
-              <path
-                fill="currentColor"
-                d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
-              ></path>
-            </svg>
-          </span>
-        </button>
-        <Drawer
-          title="Scoreboard"
-          onClose={showScoreboard}
-          open={openScore}
-          placement="left"
-        >
-          <ScoreboardDrawer {...scores} />
-        </Drawer>
-      </div>
-      <div className="game-run__scoreboard">
-        <button onClick={endSession}>
-          <span class="label">End Session</span>
-          <span class="icon">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width="24"
-              height="24"
-            >
-              <path fill="none" d="M0 0h24v24H0z"></path>
-              <path
-                fill="currentColor"
-                d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
-              ></path>
-            </svg>
-          </span>
-        </button>
-      </div>
+      <Drawer
+        title="Scoreboard"
+        onClose={showScoreboard}
+        open={openScore}
+        placement="left"
+      >
+        <ScoreboardDrawer {...scores} />
+      </Drawer>
       <Modal
         title="END GAME"
         centered
@@ -107,8 +104,8 @@ const Navbar = ({
         }}
         cancelText="Continue Playing"
         onCancel={endSession}
-        mask={true} // Enables the mask background
-        maskClosable={false} // Prevents closing modal on mask click
+        mask={true}
+        maskClosable={false}
         maskStyle={{ backgroundColor: "rgba(0, 0, 0, 1)" }}
         width={800}
         styles={{ height: 300, overflowY: "auto" }}
