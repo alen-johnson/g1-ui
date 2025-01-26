@@ -23,20 +23,34 @@ function HomePage() {
   const handleHelpClick = () => {
     navigate("/help");
   };
+
   const spawnElsewhere = (event) => {
     const icon = event.target;
+    const container = document.querySelector(".home__display-area");
 
-    const randomX = Math.floor(Math.random() * window.innerWidth);
-    const randomY = Math.floor(Math.random() * window.innerHeight);
+    const containerWidth = container.offsetWidth;
+    const containerHeight = container.offsetHeight;
+    const iconWidth = icon.offsetWidth;
+    const iconHeight = icon.offsetHeight;
+
+    const randomX = Math.floor(Math.random() * (containerWidth - iconWidth));
+    const randomY = Math.floor(Math.random() * (containerHeight - iconHeight));
 
     icon.style.position = "absolute";
     icon.style.left = `${randomX}px`;
     icon.style.top = `${randomY}px`;
-    const animations = ["moveAround1", "moveAround2", "moveAround3", "moveAround4"]
-    const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
 
-    icon.style.animation = "none";
-    void icon.offsetHeight;
+    const animations = [
+      "moveAround1",
+      "moveAround2",
+      "moveAround3",
+      "moveAround4",
+    ];
+    const randomAnimation =
+      animations[Math.floor(Math.random() * animations.length)];
+
+    icon.style.animation = "none"; 
+    void icon.offsetHeight; 
     icon.style.animation = `${randomAnimation} 30s linear infinite`;
   };
 
